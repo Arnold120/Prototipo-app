@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>EduClass - Inicio</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="mainContainer.css">
+</head>
+<body>
+    <div class="main-container">
+        <header class="main-header">
+            <img src="imagen/logo.png" alt="Logo EduClass" class="logo" onerror="this.src='https://via.placeholder.com/50x50?text=EC'">
+            <h1>EduClass</h1>
+            <p>Educación Creativa Interactiva</p>
+        </header>
+
+        <nav class="main-nav">
+            <button id="nav-dashboard" class="nav-btn" data-section="dashboard">Panel Principal</button>
+            <button id="nav-tareas" class="nav-btn" data-section="tareas">Mis Tareas</button>
+            <button id="nav-actividades" class="nav-btn" data-section="actividades">Actividades</button>
+            <button id="nav-recursos" class="nav-btn" data-section="recursos">Recursos</button>
+            <button id="nav-notificaciones" class="nav-btn" data-section="notificaciones">Notificaciones</button>
+            <button id="nav-logout" class="nav-btn logout-btn">Cerrar Sesión</button>
+        </nav>
+
+        <main id="dynamic-content" class="main-content">
+            <div class="welcome-card">
+                <h2>Bienvenido a EduClass</h2>
+                <p>Selecciona una opción del menú para comenzar.</p>
+                <p>¡Fortalece tu aprendizaje con actividades dinámicas y juegos educativos!</p>
+            </div>
+        </main>
+
+        <footer class="main-footer">
+            <p>UNAN-Managua | CUR-Carazo | Concurso de Apps Móviles 2026</p>
+        </footer>
+    </div>
+
+    <script src="scripts.js"></script>
+    <script src="auth.js"></script>
+</body>
+</html>

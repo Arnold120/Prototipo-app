@@ -1,0 +1,132 @@
+@import url(./login.css);
+
+div.signup-card{
+    margin-top: -50px;
+    width:410px;
+    max-width:99.9%;
+
+    background:#050505;
+
+    border-radius:30px;
+    padding:40px;
+}
+
+body{
+    margin: 13%;
+    justify-content: center;
+     min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:linear-gradient(
+        135deg,
+        #4f46e5,
+        #3b82f6,
+        #06b6d4
+    );
+
+    font-family:'Segoe UI',sans-serif;
+}
+
+.signup-card{
+
+    width:450px;
+    max-width:90%;
+
+    background:#050505;
+
+    border-radius:30px;
+
+    padding:40px;
+}
+
+.logo-section{
+    text-align:center;
+    color:white;
+    margin-bottom:25px;
+}
+
+.logo-section img{
+    width:90px;
+    margin-bottom: -30px;
+}
+
+.logo-section h1{
+    color:#5d7dff;
+}
+
+.input-group{
+    position:relative;
+    margin-bottom:18px;
+}
+
+.icon-left{
+    position:absolute;
+    left:20px;
+    top:50%;
+    transform:translateY(-50%);
+    color:#94a3b8;
+}
+
+.input-group input,
+.input-group select{
+
+    width:100%;
+    height:60px;
+
+    border:none;
+
+    border-radius:18px;
+
+    background:#243044;
+
+    color:white;
+
+    padding-left:55px;
+    padding-right:50px;
+
+    outline:none;
+}
+
+.toggle-password{
+    position:absolute;
+    right:15px;
+    top:50%;
+    transform:translateY(-50%);
+
+    background:none;
+    border:none;
+
+    color:#94a3b8;
+    cursor:pointer;
+}
+
+.btn-signup{
+
+    width:100%;
+    height:60px;
+
+    border:none;
+
+    border-radius:18px;
+
+    background:#2f66ff;
+
+    color:white;
+
+    font-size:18px;
+    font-weight:bold;
+
+    cursor:pointer;
+}
+
+.extra-links{
+    margin-top:20px;
+    text-align:center;
+    color:#cbd5e1;
+}
+
+.extra-links a{
+    color:#5d7dff;
+    text-decoration:none;
+}

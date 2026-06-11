@@ -1,0 +1,22 @@
+/* dashboard.css */
+#stats-container .row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+#stats-container .col {
+    flex: 1;
+    min-width: 120px;
+    background: #f8f9fa;
+    padding: 15px;
+    border-radius: 8px;
+    text-align: center;
+    font-size: 0.9rem;
+}
+
+@media (max-width: 768px) {
+    #stats-container .col {
+        min-width: calc(50% - 15px);
+    }
+}

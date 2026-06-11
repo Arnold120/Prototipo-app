@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EduClass | Crear Cuenta</title>
+
+    <link rel="stylesheet" href="signup.css">
+
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+
+<body>
+
+    <div class="signup-container">
+
+        <div class="signup-card">
+
+            <div class="logo-section">
+                <img src="../images/EduClass solo logo 2.png" alt="EduClass">
+                <h1>Crear Cuenta</h1>
+                <p>Únete a la comunidad EduClass</p>
+            </div>
+
+            <form id="signupForm">
+
+                <div class="input-group">
+                    <i class="fa-solid fa-user icon-left"></i>
+                    <input type="text" id="nombre"
+                        placeholder="Nombre completo" required>
+                </div>
+
+                <div class="input-group">
+                    <i class="fa-solid fa-envelope icon-left"></i>
+                    <input type="email" id="correo"
+                        placeholder="Correo electrónico" required>
+                </div>
+
+                <div class="input-group">
+                    <i class="fa-solid fa-school icon-left"></i>
+                    <input type="text" id="instituto"
+                        placeholder="Instituto o Centro Educativo" required>
+                </div>
+
+                <div class="input-group">
+                    <i class="fa-solid fa-graduation-cap icon-left"></i>
+
+                    <select id="rol" required>
+                        <option value="">Seleccione un rol</option>
+                        <option value="estudiante">Estudiante</option>
+                        <option value="docente">Docente</option>
+                    </select>
+                </div>
+
+                <div class="input-group">
+                    <i class="fa-solid fa-lock icon-left"></i>
+
+                    <input
+                        type="password"
+                        id="password"
+                        placeholder="Contraseña"
+                        required>
+
+                    <button
+                        type="button"
+                        id="togglePassword"
+                        class="toggle-password">
+
+                        <i class="fa-solid fa-eye"></i>
+                    </button>
+                </div>
+
+                <button type="submit" class="btn-signup">
+                    Registrarse
+                </button>
+
+            </form>
+
+            <div class="extra-links">
+                <p>
+                    ¿Ya tienes cuenta?
+                    <a href="login.html">
+                        Iniciar sesión
+                    </a>
+                </p>
+            </div>
+
+        </div>
+
+    </div>
+
+    <script src="signup.js"></script>
+
+</body>
+
+</html>
