@@ -25,30 +25,113 @@ form.addEventListener("submit", (e) => {
 
     e.preventDefault();
 
-    const usuario = {
+    const nombre =
+    document.getElementById("nombre")
+    .value.trim();
 
-        nombre:
-        document.getElementById("nombre").value,
+    const correo =
+    document.getElementById("correo")
+    .value.trim();
 
-        correo:
-        document.getElementById("correo").value,
+    const instituto =
+    document.getElementById("instituto")
+    .value.trim();
 
-        instituto:
-        document.getElementById("instituto").value,
+    const rol =
+    document.getElementById("rol")
+    .value;
 
-        rol:
-        document.getElementById("rol").value,
+    const password =
+    document.getElementById("password")
+    .value.trim();
 
-        password:
-        document.getElementById("password").value
-    };
+    if (
+        !nombre ||
+        !correo ||
+        !instituto ||
+        !rol ||
+        !password
+    ) {
+        alert(
+            "Complete todos los campos."
+        );
+        return;
+    }
 
-    localStorage.setItem(
-        "usuarioEduClass",
-        JSON.stringify(usuario)
+    const emailRegex =
+    /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (!emailRegex.test(correo)) {
+
+        alert(
+            "Ingrese un correo válido."
+        );
+
+        return;
+    }
+
+    if (password.length < 6) {
+
+        alert(
+            "La contraseña debe tener al menos 6 caracteres."
+        );
+
+        return;
+    }
+
+    const usuarios =
+    JSON.parse(
+        localStorage.getItem("usuariosEduClass")
+    ) || [];
+
+    const existeUsuario =
+    usuarios.find(
+        usuario =>
+        usuario.correo.toLowerCase() ===
+        correo.toLowerCase()
     );
 
-    alert("Cuenta creada correctamente");
+    if (existeUsuario) {
 
-    window.location.href = "../index.html";
+        alert(
+            "Ya existe una cuenta registrada con este correo."
+        );
+
+        return;
+    }
+
+    const nuevoUsuario = {
+        id: Date.now(),
+        nombre,
+        correo,
+        instituto,
+        rol,
+        password,
+        fechaRegistro:
+        new Date().toLocaleDateString()
+    };
+
+    usuarios.push(nuevoUsuario);
+
+    localStorage.setItem(
+        "usuariosEduClass",
+        JSON.stringify(usuarios)
+    );
+
+    localStorage.setItem(
+        "usuarioActual",
+        JSON.stringify(nuevoUsuario)
+    );
+
+    localStorage.setItem(
+        "sesionActiva",
+        "true"
+    );
+
+    alert(
+        `Bienvenido a EduClass, ${nombre}`
+    );
+
+    window.location.href =
+    "../index.html";
 });

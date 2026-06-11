@@ -26,15 +26,44 @@ document
     e.preventDefault();
 
     const email =
-    document.getElementById("email").value;
+    document.getElementById("email").value.trim();
 
     const password =
-    document.getElementById("password").value;
+    document.getElementById("password").value.trim();
 
-    console.log({
-        email,
-        password
-    });
+    const usuarioGuardado =
+    JSON.parse(
+        localStorage.getItem("usuarioEduClass")
+    );
 
-    alert("Inicio de sesión exitoso");
+    if (!usuarioGuardado) {
+
+        alert("No existe ninguna cuenta registrada.");
+
+        return;
+    }
+
+    if (
+        usuarioGuardado.correo === email &&
+        usuarioGuardado.password === password
+    ) {
+
+        localStorage.setItem(
+            "sesionActiva",
+            "true"
+        );
+
+        alert(
+            `Bienvenido ${usuarioGuardado.nombre}`
+        );
+
+        window.location.href =
+        "../index.html";
+
+    } else {
+
+        alert(
+            "Correo o contraseña incorrectos."
+        );
+    }
 });
