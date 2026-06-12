@@ -1,43 +1,145 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>EduClass - Inicio</title>
+    <title>EduClass</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="mainContainer.css">
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
+
 <body>
-    <div class="main-container">
-        <header class="main-header">
-            <img src="imagen/logo.png" alt="Logo EduClass" class="logo" onerror="this.src='https://via.placeholder.com/50x50?text=EC'">
-            <h1>EduClass</h1>
-            <p>Educación Creativa Interactiva</p>
-        </header>
+<aside class="sidebar">
 
-        <nav class="main-nav">
-            <button id="nav-dashboard" class="nav-btn" data-section="dashboard">Panel Principal</button>
-            <button id="nav-tareas" class="nav-btn" data-section="tareas">Mis Tareas</button>
-            <button id="nav-actividades" class="nav-btn" data-section="actividades">Actividades</button>
-            <button id="nav-recursos" class="nav-btn" data-section="recursos">Recursos</button>
-            <button id="nav-notificaciones" class="nav-btn" data-section="notificaciones">Notificaciones</button>
-            <button id="nav-logout" class="nav-btn logout-btn">Cerrar Sesión</button>
-        </nav>
-
-        <main id="dynamic-content" class="main-content">
-            <div class="welcome-card">
-                <h2>Bienvenido a EduClass</h2>
-                <p>Selecciona una opción del menú para comenzar.</p>
-                <p>¡Fortalece tu aprendizaje con actividades dinámicas y juegos educativos!</p>
-            </div>
-        </main>
-
-        <footer class="main-footer">
-            <p>UNAN-Managua | CUR-Carazo | Concurso de Apps Móviles 2026</p>
-        </footer>
+    <div class="logo">
+        <img src="./images/EduClass solo logo 2.png">
+        <h2>EduClass</h2>
+        <span>Plataforma Educativa</span>
     </div>
 
-    <script src="scripts.js"></script>
-    <script src="auth.js"></script>
+    <nav class="menu">
+
+        <a href="#" class="active">
+            <i class="fa-solid fa-house"></i>
+            Inicio
+        </a>
+
+        <a href="#">
+            <i class="fa-solid fa-book"></i>
+            Tareas
+        </a>
+
+        <a href="#">
+            <i class="fa-solid fa-gamepad"></i>
+            Actividades
+        </a>
+
+        <a href="#">
+            <i class="fa-solid fa-folder"></i>
+            Recursos
+        </a>
+
+        <a href="#">
+            <i class="fa-solid fa-bell"></i>
+            Notificaciones
+        </a>
+    </nav>
+</aside>
+
+<header class="topbar">
+
+    <div class="welcome">
+        <h1>Bienvenido 👋</h1>
+        <p>EduClass - Aprende de forma interactiva</p>
+    </div>
+
+    <div class="menu-toggle" onclick="toggleConfig()">
+        <i class="fa-solid fa-bars"></i>
+    </div>
+
+</header>
+
+<main class="main">
+
+    <section class="cards">
+
+        <div class="card">
+            <i class="fa-solid fa-book"></i>
+            <h3>Tareas</h3>
+        </div>
+
+        <div class="card">
+            <i class="fa-solid fa-gamepad"></i>
+            <h3>Actividades</h3>
+        </div>
+
+        <div class="card">
+            <i class="fa-solid fa-chart-line"></i>
+            <h3>Progreso</h3>
+        </div>
+
+        <div class="card">
+            <i class="fa-solid fa-bell"></i>
+            <h3>Alertas</h3>
+        </div>
+
+    </section>
+
+</main>
+
+<div id="configPanel" class="config-panel">
+
+    <div class="config-header">
+        <h3>Configuración</h3>
+        <i class="fa-solid fa-xmark" onclick="toggleConfig()"></i>
+    </div>
+
+    <div class="config-user">
+
+        <img src="./images/avatar.png">
+
+        <div>
+            <p id="nombreUsuario">Usuario</p>
+            <small id="rolUsuario">Rol</small>
+        </div>
+
+    </div>
+
+    <div class="config-options">
+
+        <div class="option">
+            <i class="fa-solid fa-user"></i>
+            Perfil
+        </div>
+
+        <div class="option">
+            <i class="fa-solid fa-gear"></i>
+            Ajustes
+        </div>
+
+        <div class="option">
+            <i class="fa-solid fa-bell"></i>
+            Notificaciones
+        </div>
+
+        <div class="option">
+            <i class="fa-solid fa-circle-info"></i>
+            Ayuda
+        </div>
+
+    </div>
+
+    <button class="logout" onclick="cerrarSesion()">
+        <i class="fa-solid fa-right-from-bracket"></i>
+        Cerrar sesión
+    </button>
+    <h1 class="OptionVersion" >Versión 1.0.0</h1>
+</div>
+
+<script src="scripts.js"></script>
+
 </body>
+
 </html>
