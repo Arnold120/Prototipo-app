@@ -118,18 +118,19 @@ function calificarEntrega(entregaId) {
     renderizarEntregas();
 }
 
+// FUNCIÓN RENDERIZAR CHATS CORREGIDA
 function renderizarChats() {
     let contactosMap = new Map();
     grupos.filter(g => g.docenteId === usuarioActual.id).forEach(g => {
         if (g.estudiantes) g.estudiantes.forEach(eId => {
             let estudiante = usuarios.find(u => u.id === eId);
-            if (estudiante && !contactosMap.has(eId)) {
-                contactosMap.set(eId, { 
-                    id: eId,
+            if (estudiante && !contactosMap.has(estudiante.id)) {
+                contactosMap.set(estudiante.id, { 
+                    id: estudiante.id,
                     nombre: estudiante.nombre,
                     nombreMostrar: `${estudiante.nombre} (Estudiante)`,
                     tipo: "estudiante",
-                    avatar: getAvatarUrl(eId)
+                    avatar: getAvatarUrl(estudiante.id)
                 });
             }
         });
@@ -160,14 +161,21 @@ function renderizarChats() {
 
 let chatActual = { id: null, nombre: "", esGrupo: false, grupoId: null };
 
+// FUNCIÓN ABRIR CHAT CORREGIDA
 function abrirChat(id, nombre, esGrupo, grupoId) {
     chatActual = { id, nombre, esGrupo, grupoId };
     document.getElementById("chatTitulo").innerHTML = `<i class="fa-regular fa-comment"></i> Chat con ${escapeHtml(nombre)}`;
     
-    let mensajesChat = mensajes.filter(m => {
-        if (esGrupo) return m.grupoId === grupoId;
-        return (m.deId === usuarioActual.id && m.paraId === parseInt(id)) || (m.deId === parseInt(id) && m.paraId === usuarioActual.id);
-    });
+    let mensajesChat;
+    if (esGrupo) {
+        mensajesChat = mensajes.filter(m => m.grupoId === grupoId);
+    } else {
+        const idNumero = typeof id === 'string' ? parseInt(id) : id;
+        mensajesChat = mensajes.filter(m => 
+            (m.deId === usuarioActual.id && m.paraId === idNumero) || 
+            (m.deId === idNumero && m.paraId === usuarioActual.id)
+        );
+    }
     mensajesChat.sort((a, b) => new Date(a.fecha) - new Date(b.fecha));
     
     let html = mensajesChat.map(m => {
@@ -190,11 +198,15 @@ function abrirChat(id, nombre, esGrupo, grupoId) {
     document.getElementById("chatMensajesArea").innerHTML = html || '<div style="text-align:center; padding:40px; color:#94a3b8">No hay mensajes aún. ¡Envía el primero!</div>';
     document.getElementById("modalChatOverlay").style.display = "flex";
     
-    mensajes.filter(m => m.paraId === usuarioActual.id && !m.leido).forEach(m => { m.leido = true; });
+    if (!esGrupo) {
+        const idNumero = typeof id === 'string' ? parseInt(id) : id;
+        mensajes.filter(m => m.deId === idNumero && m.paraId === usuarioActual.id && !m.leido).forEach(m => { m.leido = true; });
+    }
     guardarTodo();
     setTimeout(() => { document.getElementById("chatMensajesArea").scrollTop = document.getElementById("chatMensajesArea").scrollHeight; }, 100);
 }
 
+// FUNCIÓN ENVIAR MENSAJE CORREGIDA
 function enviarMensaje() {
     let texto = document.getElementById("mensajeTexto").value.trim();
     if (!texto || !chatActual.id) return;
@@ -204,12 +216,13 @@ function enviarMensaje() {
         nuevoMensaje.grupoId = chatActual.grupoId;
         nuevoMensaje.esGrupo = true;
     } else {
-        nuevoMensaje.paraId = parseInt(chatActual.id);
+        nuevoMensaje.paraId = typeof chatActual.id === 'string' ? parseInt(chatActual.id) : chatActual.id;
     }
     mensajes.push(nuevoMensaje);
     guardarTodo();
     document.getElementById("mensajeTexto").value = "";
     abrirChat(chatActual.id, chatActual.nombre, chatActual.esGrupo, chatActual.grupoId);
+    mostrarToast("Mensaje enviado", "success");
 }
 
 function cerrarModalChat() { document.getElementById("modalChatOverlay").style.display = "none"; chatActual = { id: null, nombre: "", esGrupo: false, grupoId: null }; }
