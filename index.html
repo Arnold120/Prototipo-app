@@ -20,7 +20,6 @@
             overflow-x: hidden;
         }
 
-        /* SIDEBAR */
         .sidebar {
             width: 280px;
             background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%);
@@ -36,45 +35,15 @@
             box-shadow: 4px 0 25px rgba(0, 0, 0, 0.3);
         }
 
-        .sidebar.mobile-open {
-            left: 0;
-        }
+        .sidebar.mobile-open { left: 0; }
+        @media (min-width: 769px) { .sidebar { left: 0; } }
 
-        @media (min-width: 769px) {
-            .sidebar {
-                left: 0;
-            }
-        }
+        .logo { text-align: center; padding: 30px 20px 20px; border-bottom: 1px solid rgba(255, 255, 255, 0.1); }
+        .logo img { width: 70px; margin-bottom: 12px; }
+        .logo h2 { color: #60a5fa; font-size: 1.5rem; }
+        .logo span { font-size: 12px; color: #94a3b8; }
 
-        .logo {
-            text-align: center;
-            padding: 30px 20px 20px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .logo img {
-            width: 70px;
-            margin-bottom: 12px;
-        }
-
-        .logo h2 {
-            color: #60a5fa;
-            font-size: 1.5rem;
-        }
-
-        .logo span {
-            font-size: 12px;
-            color: #94a3b8;
-        }
-
-        .menu {
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-            padding: 20px 16px;
-            flex: 1;
-        }
-
+        .menu { display: flex; flex-direction: column; gap: 6px; padding: 20px 16px; flex: 1; }
         .menu a {
             text-decoration: none;
             color: #cbd5e1;
@@ -83,33 +52,15 @@
             display: flex;
             gap: 14px;
             align-items: center;
-            transition: all 0.3s ease;
+            transition: all 0.3s;
             cursor: pointer;
             font-weight: 500;
         }
+        .menu a i { width: 22px; font-size: 1.1rem; }
+        .menu a:hover { background: rgba(255, 255, 255, 0.1); color: white; transform: translateX(5px); }
+        .menu a.active { background: linear-gradient(135deg, #2563eb, #1d4ed8); color: white; box-shadow: 0 4px 12px rgba(37, 99, 235, 0.4); }
 
-        .menu a i {
-            width: 22px;
-            font-size: 1.1rem;
-        }
-
-        .menu a:hover {
-            background: rgba(255, 255, 255, 0.1);
-            color: white;
-            transform: translateX(5px);
-        }
-
-        .menu a.active {
-            background: linear-gradient(135deg, #2563eb, #1d4ed8);
-            color: white;
-            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.4);
-        }
-
-        .sidebar-footer {
-            padding: 20px 16px 30px;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
+        .sidebar-footer { padding: 20px 16px 30px; border-top: 1px solid rgba(255, 255, 255, 0.1); }
         .cerrar-sesion-btn {
             display: flex;
             align-items: center;
@@ -119,19 +70,13 @@
             border: none;
             border-radius: 14px;
             cursor: pointer;
-            transition: all 0.3s ease;
             color: white;
             font-weight: 600;
             width: 100%;
             box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
         }
+        .cerrar-sesion-btn:hover { background: linear-gradient(135deg, #dc2626, #b91c1c); transform: translateX(5px); }
 
-        .cerrar-sesion-btn:hover {
-            background: linear-gradient(135deg, #dc2626, #b91c1c);
-            transform: translateX(5px);
-        }
-
-        /* TOPBAR */
         .topbar {
             margin-left: 0;
             background: rgba(255, 255, 255, 0.98);
@@ -146,119 +91,27 @@
             z-index: 99;
             border-bottom: 1px solid #e2e8f0;
         }
+        @media (min-width: 769px) { .topbar { margin-left: 280px; } }
 
-        @media (min-width: 769px) {
-            .topbar {
-                margin-left: 280px;
-            }
-        }
+        .welcome h1 { font-size: 1.3rem; display: flex; align-items: center; gap: 10px; color: #1e293b; }
+        .welcome h1 i { color: #2563eb; }
+        .welcome p { color: #64748b; font-size: 0.8rem; margin-top: 4px; }
+        .menu-toggle { font-size: 24px; cursor: pointer; color: #475569; background: #f1f5f9; border: none; padding: 10px 14px; border-radius: 12px; display: block; }
+        @media (min-width: 769px) { .menu-toggle { display: none; } }
 
-        .welcome h1 {
-            font-size: 1.3rem;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            color: #1e293b;
-        }
+        .main-content { padding: 24px 20px; min-height: calc(100vh - 80px); padding-bottom: 90px; }
+        @media (min-width: 769px) { .main-content { margin-left: 280px; padding: 28px 32px; padding-bottom: 40px; } }
 
-        .welcome h1 i {
-            color: #2563eb;
-        }
+        .dashboard { display: none; animation: fadeInUp 0.4s ease; }
+        .dashboard.active-section { display: block; }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 
-        .welcome p {
-            color: #64748b;
-            font-size: 0.8rem;
-            margin-top: 4px;
-        }
+        .search-box { margin-bottom: 24px; position: relative; }
+        .search-box i { position: absolute; left: 16px; top: 50%; transform: translateY(-50%); color: #94a3b8; }
+        .search-box input { width: 100%; height: 48px; padding: 0 20px 0 48px; border: 1px solid #e2e8f0; border-radius: 16px; background: white; font-size: 14px; }
 
-        .menu-toggle {
-            font-size: 24px;
-            cursor: pointer;
-            color: #475569;
-            background: #f1f5f9;
-            border: none;
-            padding: 10px 14px;
-            border-radius: 12px;
-            display: block;
-        }
-
-        @media (min-width: 769px) {
-            .menu-toggle {
-                display: none;
-            }
-        }
-
-        /* MAIN CONTENT */
-        .main-content {
-            padding: 24px 20px;
-            min-height: calc(100vh - 80px);
-            padding-bottom: 90px;
-        }
-
-        @media (min-width: 769px) {
-            .main-content {
-                margin-left: 280px;
-                padding: 28px 32px;
-                padding-bottom: 40px;
-            }
-        }
-
-        .dashboard {
-            display: none;
-            animation: fadeInUp 0.4s ease;
-        }
-
-        .dashboard.active-section {
-            display: block;
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .search-box {
-            margin-bottom: 24px;
-            position: relative;
-        }
-
-        .search-box i {
-            position: absolute;
-            left: 16px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: #94a3b8;
-        }
-
-        .search-box input {
-            width: 100%;
-            height: 48px;
-            padding: 0 20px 0 48px;
-            border: 1px solid #e2e8f0;
-            border-radius: 16px;
-            background: white;
-            font-size: 14px;
-        }
-
-        .resumen-tareas {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 15px;
-            margin-bottom: 24px;
-        }
-
-        @media (min-width: 768px) {
-            .resumen-tareas {
-                grid-template-columns: repeat(4, 1fr);
-                gap: 20px;
-            }
-        }
+        .resumen-tareas { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; margin-bottom: 24px; }
+        @media (min-width: 768px) { .resumen-tareas { grid-template-columns: repeat(4, 1fr); gap: 20px; } }
 
         .card-resumen {
             background: white;
@@ -271,66 +124,18 @@
             transition: all 0.3s;
             cursor: pointer;
         }
-
-        .card-resumen:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-        }
-
-        .icon-card {
-            width: 50px;
-            height: 50px;
-            border-radius: 16px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 24px;
-        }
-
+        .card-resumen:hover { transform: translateY(-3px); box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1); }
+        .icon-card { width: 50px; height: 50px; border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 24px; }
         .card-resumen:nth-child(1) .icon-card { background: #fef3c7; color: #d97706; }
         .card-resumen:nth-child(2) .icon-card { background: #dcfce7; color: #16a34a; }
         .card-resumen:nth-child(3) .icon-card { background: #e0f2fe; color: #0284c7; }
         .card-resumen:nth-child(4) .icon-card { background: #e0e7ff; color: #4f46e5; }
+        .card-info h3 { font-size: 12px; color: #64748b; font-weight: 500; }
+        .card-number { font-size: 26px; font-weight: 800; color: #1e293b; line-height: 1.2; }
 
-        .card-info h3 {
-            font-size: 12px;
-            color: #64748b;
-            font-weight: 500;
-        }
-
-        .card-number {
-            font-size: 26px;
-            font-weight: 800;
-            color: #1e293b;
-            line-height: 1.2;
-        }
-
-        .bloque-tareas {
-            background: white;
-            border-radius: 24px;
-            padding: 20px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-            margin-bottom: 20px;
-        }
-
-        .bloque-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 18px;
-            padding-bottom: 10px;
-            border-bottom: 2px solid #eef2ff;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-
-        .bloque-header h2 {
-            font-size: 1.1rem;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            color: #1e293b;
-        }
+        .bloque-tareas { background: white; border-radius: 24px; padding: 20px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05); margin-bottom: 20px; }
+        .bloque-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px; padding-bottom: 10px; border-bottom: 2px solid #eef2ff; flex-wrap: wrap; gap: 10px; }
+        .bloque-header h2 { font-size: 1.1rem; display: flex; align-items: center; gap: 8px; color: #1e293b; }
 
         .btn-unirse, .btn-primary {
             background: linear-gradient(135deg, #2563eb, #1d4ed8);
@@ -346,111 +151,39 @@
             font-size: 0.8rem;
             transition: all 0.3s;
         }
+        .btn-unirse:hover, .btn-primary:hover { transform: scale(1.02); box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3); }
+        .btn-entregar { background: #10b981; padding: 5px 12px; border-radius: 10px; font-size: 11px; }
 
-        .btn-unirse:hover, .btn-primary:hover {
-            transform: scale(1.02);
-            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
-        }
-
-        .btn-entregar {
-            background: #10b981;
-            padding: 5px 12px;
-            border-radius: 10px;
-            font-size: 11px;
-        }
-
-        .lista-tareas {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            max-height: 450px;
-            overflow-y: auto;
-        }
-
-        .tarea-card, .grupo-card, .mensaje-card {
+        .lista-tareas { display: flex; flex-direction: column; gap: 12px; max-height: 450px; overflow-y: auto; }
+        .tarea-card, .grupo-card, .chat-card {
             background: #f8fafc;
             border-radius: 14px;
             padding: 14px;
             transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 12px;
         }
-
-        .tarea-card { border-left: 4px solid #f59e0b; }
+        .tarea-card { border-left: 4px solid #f59e0b; display: block; }
         .tarea-card.entregada { border-left-color: #10b981; background: #f0fdf4; }
         .grupo-card { border-left: 4px solid #2563eb; }
-        .mensaje-card { border-left: 4px solid #8b5cf6; cursor: pointer; }
+        .chat-card { border-left: 4px solid #8b5cf6; cursor: pointer; }
+        .tarea-card:hover, .grupo-card:hover, .chat-card:hover { background: #f1f5f9; transform: translateX(4px); }
 
-        .tarea-card:hover, .grupo-card:hover, .mensaje-card:hover {
-            background: #f1f5f9;
-            transform: translateX(4px);
-        }
+        .chat-avatar-list { width: 45px; height: 45px; border-radius: 50%; object-fit: cover; border: 2px solid #e2e8f0; background: #f1f5f9; }
+        .card-info-flex { flex: 1; }
+        .card-info-flex .grupo-nombre { font-weight: 700; font-size: 0.95rem; margin-bottom: 3px; }
+        .card-info-flex .grupo-desc { font-size: 11px; color: #64748b; }
 
-        .tarea-header, .grupo-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 8px;
-            flex-wrap: wrap;
-            gap: 8px;
-        }
-
-        .tarea-titulo, .grupo-nombre {
-            font-weight: 700;
-            font-size: 0.95rem;
-            color: #0f172a;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        .badge-grupo, .badge-nota {
-            background: #e0e7ff;
-            color: #4f46e5;
-            padding: 3px 10px;
-            border-radius: 20px;
-            font-size: 10px;
-            font-weight: 600;
-        }
-
+        .tarea-header, .grupo-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; flex-wrap: wrap; gap: 8px; }
+        .tarea-titulo, .grupo-nombre { font-weight: 700; font-size: 0.95rem; color: #0f172a; display: flex; align-items: center; gap: 6px; }
+        .badge-grupo, .badge-nota { background: #e0e7ff; color: #4f46e5; padding: 3px 10px; border-radius: 20px; font-size: 10px; font-weight: 600; }
         .badge-nota { background: #dcfce7; color: #16a34a; }
-
-        .tarea-desc, .grupo-desc {
-            font-size: 12px;
-            color: #475569;
-            margin-bottom: 10px;
-            line-height: 1.4;
-        }
-
-        .tarea-footer, .grupo-footer {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 11px;
-            color: #64748b;
-            flex-wrap: wrap;
-            gap: 8px;
-        }
-
-        .fecha-entrega {
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            background: #fef3c7;
-            padding: 3px 8px;
-            border-radius: 20px;
-            color: #d97706;
-        }
-
-        .empty-message {
-            text-align: center;
-            padding: 40px 20px;
-            color: #94a3b8;
-        }
-
-        .empty-message i {
-            font-size: 48px;
-            margin-bottom: 12px;
-            display: block;
-        }
+        .tarea-desc, .grupo-desc { font-size: 12px; color: #475569; margin-bottom: 10px; line-height: 1.4; }
+        .tarea-footer, .grupo-footer { display: flex; justify-content: space-between; align-items: center; font-size: 11px; color: #64748b; flex-wrap: wrap; gap: 8px; }
+        .fecha-entrega { display: flex; align-items: center; gap: 5px; background: #fef3c7; padding: 3px 8px; border-radius: 20px; color: #d97706; }
+        .empty-message { text-align: center; padding: 40px 20px; color: #94a3b8; }
+        .empty-message i { font-size: 48px; margin-bottom: 12px; display: block; }
 
         .modal-overlay {
             position: fixed;
@@ -465,48 +198,41 @@
             justify-content: center;
             align-items: center;
         }
+        .modal-contenido { background: white; border-radius: 24px; padding: 24px; width: 90%; max-width: 450px; }
+        .modal-contenido h3 { margin-bottom: 18px; color: #1e293b; display: flex; align-items: center; gap: 10px; }
+        .modal-contenido input { width: 100%; padding: 12px; border: 1px solid #e2e8f0; border-radius: 12px; margin-bottom: 12px; font-size: 14px; text-transform: uppercase; text-align: center; letter-spacing: 2px; }
+        .modal-buttons { display: flex; gap: 12px; justify-content: flex-end; margin-top: 18px; }
+        .modal-buttons button { padding: 8px 20px; border-radius: 12px; border: none; cursor: pointer; font-weight: 600; }
+        .modal-buttons button:first-child { background: #f1f5f9; color: #475569; }
+        .modal-buttons button:last-child { background: #2563eb; color: white; }
 
-        .modal-contenido {
-            background: white;
-            border-radius: 24px;
-            padding: 24px;
-            width: 90%;
-            max-width: 450px;
-        }
+        .chat-mensaje { margin-bottom: 12px; display: flex; align-items: flex-start; gap: 10px; }
+        .chat-avatar { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; background: #f1f5f9; }
+        .chat-burbuja { flex: 1; }
+        .chat-burbuja-propio { text-align: right; }
+        .chat-burbuja-propio .chat-texto { background: #2563eb; color: white; display: inline-block; }
+        .chat-texto { background: #e2e8f0; padding: 10px 14px; border-radius: 18px; display: inline-block; max-width: 80%; word-wrap: break-word; }
+        .chat-nombre { font-size: 11px; color: #64748b; margin-bottom: 4px; font-weight: 600; }
+        .chat-hora { font-size: 10px; color: #94a3b8; margin-top: 4px; }
 
-        .modal-contenido h3 {
-            margin-bottom: 18px;
-            color: #1e293b;
+        .perfil-avatar { position: relative; margin-top: -50px; text-align: center; cursor: pointer; }
+        .perfil-avatar img { width: 90px; height: 90px; border-radius: 50%; border: 4px solid white; object-fit: cover; background: #f1f5f9; }
+        .avatar-edit-icon {
+            position: absolute;
+            bottom: 0px;
+            right: 50%;
+            transform: translateX(50%);
+            background: #2563eb;
+            color: white;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
             display: flex;
             align-items: center;
-            gap: 10px;
-        }
-
-        .modal-contenido input {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid #e2e8f0;
-            border-radius: 12px;
-            margin-bottom: 12px;
-            font-size: 14px;
-            text-transform: uppercase;
-            text-align: center;
-            letter-spacing: 2px;
-        }
-
-        .modal-buttons {
-            display: flex;
-            gap: 12px;
-            justify-content: flex-end;
-            margin-top: 18px;
-        }
-
-        .modal-buttons button {
-            padding: 8px 20px;
-            border-radius: 12px;
-            border: none;
+            justify-content: center;
+            font-size: 12px;
             cursor: pointer;
-            font-weight: 600;
+            border: 2px solid white;
         }
 
         .toast-mensaje {
@@ -524,83 +250,21 @@
             z-index: 2000;
             transition: 0.3s;
             opacity: 0;
-            font-size: 14px;
         }
-
-        .toast-mensaje.show {
-            opacity: 1;
-            transform: translateX(-50%) translateY(0);
-        }
-
+        .toast-mensaje.show { opacity: 1; transform: translateX(-50%) translateY(0); }
         .toast-mensaje.success { background: #10b981; }
         .toast-mensaje.error { background: #ef4444; }
 
-        .perfil-card {
-            background: white;
-            border-radius: 24px;
-            overflow: hidden;
-        }
-
-        .perfil-portada {
-            background: linear-gradient(135deg, #2563eb, #4f46e5);
-            height: 100px;
-        }
-
-        .perfil-avatar {
-            position: relative;
-            margin-top: -50px;
-            text-align: center;
-        }
-
-        .perfil-avatar img {
-            width: 90px;
-            height: 90px;
-            border-radius: 50%;
-            border: 4px solid white;
-        }
-
-        .perfil-info {
-            text-align: center;
-            padding: 15px;
-        }
-
-        .perfil-info h2 {
-            font-size: 1.3rem;
-            margin-bottom: 5px;
-        }
-
-        .perfil-detalles {
-            padding: 5px 20px 20px;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        .detalle-item {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 12px;
-            background: #f8fafc;
-            border-radius: 14px;
-        }
-
+        .perfil-card { background: white; border-radius: 24px; overflow: hidden; }
+        .perfil-portada { background: linear-gradient(135deg, #2563eb, #4f46e5); height: 100px; }
+        .perfil-info { text-align: center; padding: 15px; }
+        .perfil-info h2 { font-size: 1.3rem; margin-bottom: 5px; }
+        .perfil-detalles { padding: 5px 20px 20px; display: flex; flex-direction: column; gap: 10px; }
+        .detalle-item { display: flex; align-items: center; gap: 12px; padding: 12px; background: #f8fafc; border-radius: 14px; }
         .detalle-item i { width: 28px; color: #2563eb; }
 
-        .sidebar-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            z-index: 999;
-            display: none;
-        }
-
-        .sidebar-overlay.active {
-            display: block;
-        }
+        .sidebar-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.5); z-index: 999; display: none; }
+        .sidebar-overlay.active { display: block; }
 
         .bottom-nav {
             position: fixed;
@@ -615,28 +279,9 @@
             z-index: 100;
             border-top: 1px solid rgba(255, 255, 255, 0.1);
         }
-
-        @media (min-width: 769px) {
-            .bottom-nav {
-                display: none;
-            }
-        }
-
-        .bottom-nav a {
-            text-decoration: none;
-            color: #94a3b8;
-            font-size: 11px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 4px;
-            cursor: pointer;
-        }
-
-        .bottom-nav a i {
-            font-size: 20px;
-        }
-
+        @media (min-width: 769px) { .bottom-nav { display: none; } }
+        .bottom-nav a { text-decoration: none; color: #94a3b8; font-size: 11px; display: flex; flex-direction: column; align-items: center; gap: 4px; cursor: pointer; }
+        .bottom-nav a i { font-size: 20px; }
         .bottom-nav a.active { color: #60a5fa; }
     </style>
 </head>
@@ -660,9 +305,7 @@
         <a data-section="perfil"><i class="fa-solid fa-user-circle"></i> Perfil</a>
     </nav>
     <div class="sidebar-footer">
-        <button class="cerrar-sesion-btn" onclick="cerrarSesion()">
-            <i class="fa-solid fa-right-from-bracket"></i> Cerrar sesión
-        </button>
+        <button class="cerrar-sesion-btn" onclick="cerrarSesion()"><i class="fa-solid fa-right-from-bracket"></i> Cerrar sesión</button>
     </div>
 </aside>
 
@@ -712,7 +355,11 @@
     <section id="perfil" class="dashboard">
         <div class="perfil-card">
             <div class="perfil-portada"></div>
-            <div class="perfil-avatar"><img src="./images/avatar.png" onerror="this.src='https://via.placeholder.com/90'"></div>
+            <div class="perfil-avatar" onclick="document.getElementById('avatarInput').click()">
+                <img id="avatarImg" src="./images/avatar.png" onerror="this.src='./images/avatar.png'">
+                <div class="avatar-edit-icon"><i class="fa-solid fa-camera"></i></div>
+            </div>
+            <input type="file" id="avatarInput" accept="image/*" style="display:none" onchange="cambiarAvatar(this)">
             <div class="perfil-info"><h2 id="perfilNombre"></h2><span class="rol-badge" style="background:#e0f2fe; color:#0284c7; padding:4px 12px; border-radius:20px; font-size:12px"><i class="fa-solid fa-graduation-cap"></i> Estudiante</span></div>
             <div class="perfil-detalles">
                 <div class="detalle-item"><i class="fa-solid fa-envelope"></i> <span id="perfilEmail"></span></div>
@@ -732,35 +379,25 @@
 </nav>
 
 <div id="modalUnirseOverlay" class="modal-overlay"><div class="modal-contenido"><h3><i class="fa-solid fa-qrcode"></i> Unirse a Clase</h3><input type="text" id="codigoClase" placeholder="Código de 6 caracteres" maxlength="6"><div class="modal-buttons"><button onclick="cerrarModalUnirse()">Cancelar</button><button onclick="unirseAClase()">Unirse</button></div></div></div>
-<div id="modalChatOverlay" class="modal-overlay"><div class="modal-contenido"><h3 id="chatTitulo">Chat</h3><div id="chatMensajes" style="max-height:300px; overflow-y:auto; margin-bottom:15px; background:#f8fafc; border-radius:14px; padding:10px;"></div><div style="display:flex; gap:10px;"><input type="text" id="mensajeTexto" placeholder="Escribe un mensaje..." style="flex:1; padding:10px; border:1px solid #e2e8f0; border-radius:12px"><button onclick="enviarMensaje()" style="background:#2563eb; color:white; border:none; padding:10px 20px; border-radius:12px">Enviar</button></div><div class="modal-buttons"><button onclick="cerrarModalChat()">Cerrar</button></div></div></div>
+<div id="modalChatOverlay" class="modal-overlay"><div class="modal-contenido"><h3 id="chatTitulo"><i class="fa-regular fa-comment"></i> Chat</h3><div id="chatMensajesArea" style="max-height:350px; overflow-y:auto; margin-bottom:15px; background:#f8fafc; border-radius:18px; padding:15px;"></div><div style="display:flex; gap:10px;"><input type="text" id="mensajeTexto" placeholder="Escribe un mensaje..." style="flex:1; padding:12px; border:1px solid #e2e8f0; border-radius:14px"><button onclick="enviarMensaje()" style="background:#2563eb; color:white; border:none; padding:12px 20px; border-radius:14px; cursor:pointer"><i class="fa-regular fa-paper-plane"></i> Enviar</button></div><div class="modal-buttons" style="margin-top:15px;"><button onclick="cerrarModalChat()">Cerrar</button></div></div></div>
 
 <script>
-    // OBTENER DATOS DEL LOCALSTORAGE
+    // ==================== CONFIGURACIÓN DE IMÁGENES PREDETERMINADAS ====================
+    const DEFAULT_AVATAR = "./images/avatar.png";
+    
     let usuarioActual = JSON.parse(localStorage.getItem("usuarioActual"));
-    let sesionActiva = localStorage.getItem("sesionActiva");
-
-    // Verificar sesión
-    if (!usuarioActual || !sesionActiva) {
-        window.location.href = "auth/login.html";
-    }
-    if (usuarioActual.rol && usuarioActual.rol.toLowerCase() === "docente") {
-        window.location.href = "./docente/index.html";
-    }
-
-    // ESTRUCTURAS COMPARTIDAS (se mantienen intactas)
+    if (!usuarioActual || usuarioActual.rol !== "estudiante") window.location.href = "auth/login.html";
+    
     let grupos = JSON.parse(localStorage.getItem("gruposDocente")) || [];
     let trabajos = JSON.parse(localStorage.getItem("trabajosDocente")) || [];
     let matriculas = JSON.parse(localStorage.getItem("matriculasEduClass")) || [];
     let entregas = JSON.parse(localStorage.getItem("entregasEstudiante")) || [];
     let mensajes = JSON.parse(localStorage.getItem("mensajesEduClass")) || [];
     let usuarios = JSON.parse(localStorage.getItem("usuariosEduClass")) || [];
-
-    // Asegurar que el usuario actual esté en la lista
-    if (!usuarios.find(u => u.id === usuarioActual.id)) {
-        usuarios.push(usuarioActual);
-        localStorage.setItem("usuariosEduClass", JSON.stringify(usuarios));
-    }
-
+    let avatares = JSON.parse(localStorage.getItem("avataresUsuarios")) || {};
+    
+    if (!usuarios.find(u => u.id === usuarioActual.id)) usuarios.push(usuarioActual);
+    
     function guardarTodo() {
         localStorage.setItem("gruposDocente", JSON.stringify(grupos));
         localStorage.setItem("trabajosDocente", JSON.stringify(trabajos));
@@ -768,12 +405,11 @@
         localStorage.setItem("entregasEstudiante", JSON.stringify(entregas));
         localStorage.setItem("mensajesEduClass", JSON.stringify(mensajes));
         localStorage.setItem("usuariosEduClass", JSON.stringify(usuarios));
+        localStorage.setItem("avataresUsuarios", JSON.stringify(avatares));
     }
-
-    function getMisGrupos() {
-        return grupos.filter(g => matriculas.some(m => m.estudianteId === usuarioActual.id && m.grupoId === g.id));
-    }
-
+    
+    function getMisGrupos() { return grupos.filter(g => matriculas.some(m => m.estudianteId === usuarioActual.id && m.grupoId === g.id)); }
+    
     function getMisTareas() {
         let misGruposIds = getMisGrupos().map(g => g.id);
         return trabajos.filter(t => misGruposIds.includes(t.grupoId)).map(t => ({
@@ -782,20 +418,17 @@
             nota: entregas.find(e => e.trabajoId === t.id && e.estudianteId === usuarioActual.id)?.nota || null
         }));
     }
-
+    
+    function getAvatarUrl(userId) { return avatares[userId] || DEFAULT_AVATAR; }
+    
     function mostrarToast(texto, tipo) {
         let t = document.getElementById("toast");
-        if (!t) {
-            t = document.createElement("div");
-            t.id = "toast";
-            t.className = "toast-mensaje";
-            document.body.appendChild(t);
-        }
+        if (!t) { t = document.createElement("div"); t.id = "toast"; t.className = "toast-mensaje"; document.body.appendChild(t); }
         t.innerHTML = `<i class="fa-solid fa-${tipo === 'success' ? 'check-circle' : 'exclamation-circle'}"></i> ${texto}`;
         t.className = `toast-mensaje ${tipo} show`;
         setTimeout(() => t.classList.remove("show"), 2500);
     }
-
+    
     function actualizarContadores() {
         let tareas = getMisTareas();
         document.getElementById("totalPendientes").innerText = tareas.filter(t => !t.entregada).length;
@@ -803,120 +436,128 @@
         document.getElementById("totalClases").innerText = getMisGrupos().length;
         document.getElementById("totalMensajes").innerText = mensajes.filter(m => m.paraId === usuarioActual.id && !m.leido).length;
     }
-
+    
     function renderizarTareas() {
         let tareas = getMisTareas();
         let pendientes = tareas.filter(t => !t.entregada);
         let entregadasList = tareas.filter(t => t.entregada);
-        
-        const render = (t, isPendiente) => `
-            <div class="tarea-card ${t.entregada ? 'entregada' : ''}">
-                <div class="tarea-header">
-                    <span class="tarea-titulo"><i class="fa-solid fa-file-alt"></i> ${escapeHtml(t.titulo)}</span>
-                    <span class="badge-grupo">${escapeHtml(t.grupoNombre)}</span>
-                </div>
-                <div class="tarea-desc">${escapeHtml(t.descripcion || "Sin descripción")}</div>
-                <div class="tarea-footer">
-                    <span class="fecha-entrega"><i class="fa-regular fa-calendar"></i> ${t.fechaEntrega || "Sin fecha"}</span>
-                    ${isPendiente ? `<button class="btn-unirse btn-entregar" onclick="marcarEntregada(${t.id})"><i class="fa-solid fa-check"></i> Entregar</button>` : '<span style="color:#10b981"><i class="fa-solid fa-check-circle"></i> Entregada</span>'}
-                </div>
-            </div>
-        `;
-        
+        const render = (t, isPendiente) => `<div class="tarea-card ${t.entregada ? 'entregada' : ''}"><div class="tarea-header"><span class="tarea-titulo"><i class="fa-solid fa-file-alt"></i> ${escapeHtml(t.titulo)}</span><span class="badge-grupo">${escapeHtml(t.grupoNombre)}</span></div><div class="tarea-desc">${escapeHtml(t.descripcion || "Sin descripción")}</div><div class="tarea-footer"><span class="fecha-entrega"><i class="fa-regular fa-calendar"></i> ${t.fechaEntrega || "Sin fecha"}</span>${isPendiente ? `<button class="btn-unirse btn-entregar" onclick="marcarEntregada(${t.id})"><i class="fa-solid fa-check"></i> Entregar</button>` : '<span style="color:#10b981"><i class="fa-solid fa-check-circle"></i> Entregada</span>'}</div></div>`;
         document.getElementById("listaPendientes").innerHTML = pendientes.length ? pendientes.map(t => render(t, true)).join("") : '<div class="empty-message"><i class="fa-regular fa-clock"></i><p>No hay tareas pendientes</p></div>';
         document.getElementById("listaTareasCompletas").innerHTML = [...pendientes, ...entregadasList].length ? [...pendientes, ...entregadasList].map(t => render(t, !t.entregada)).join("") : '<div class="empty-message"><i class="fa-regular fa-file"></i><p>No hay tareas</p><button class="btn-unirse" onclick="abrirModalUnirse()">Unirse a clase</button></div>';
         actualizarContadores();
     }
-
+    
     function renderizarClases() {
         let misGrupos = getMisGrupos();
-        document.getElementById("listaClases").innerHTML = misGrupos.length ? misGrupos.map(g => `
-            <div class="grupo-card">
-                <div class="grupo-header">
-                    <span class="grupo-nombre"><i class="fa-solid fa-chalkboard"></i> ${escapeHtml(g.nombre)}</span>
-                </div>
-                <div class="grupo-desc">${escapeHtml(g.descripcion || "Sin descripción")}</div>
-                <div class="grupo-footer">
-                    <span><i class="fa-solid fa-code"></i> ${g.codigo}</span>
-                    <button class="btn-primary" style="padding:4px 12px; font-size:11px" onclick="abrirChatDocente(${g.docenteId})"><i class="fa-regular fa-comment"></i> Contactar</button>
-                </div>
-            </div>
-        `).join("") : '<div class="empty-message"><i class="fa-regular fa-folder-open"></i><p>No hay clases</p><button class="btn-unirse" onclick="abrirModalUnirse()">Unirse</button></div>';
+        document.getElementById("listaClases").innerHTML = misGrupos.length ? misGrupos.map(g => `<div class="grupo-card"><img src="${getAvatarUrl(g.docenteId)}" class="chat-avatar-list" onerror="this.src='${DEFAULT_AVATAR}'"><div class="card-info-flex"><div class="grupo-nombre"><i class="fa-solid fa-chalkboard"></i> ${escapeHtml(g.nombre)}</div><div class="grupo-desc">${escapeHtml(g.descripcion || "Sin descripción")}</div><div class="grupo-footer"><span><i class="fa-solid fa-code"></i> Código: ${g.codigo}</span><button class="btn-primary" style="padding:4px 12px; font-size:11px" onclick="abrirChat('docente_${g.docenteId}', '${escapeHtml(g.nombre)} (Docente)', false, null)"><i class="fa-regular fa-comment"></i> Contactar</button></div></div></div>`).join("") : '<div class="empty-message"><i class="fa-regular fa-folder-open"></i><p>No hay clases</p><button class="btn-unirse" onclick="abrirModalUnirse()">Unirse</button></div>';
     }
-
+    
     function renderizarNotas() {
         let tareas = getMisTareas().filter(t => t.entregada && t.nota !== null);
-        document.getElementById("listaNotas").innerHTML = tareas.length ? tareas.map(t => `
-            <div class="tarea-card">
-                <div class="tarea-header">
-                    <span class="tarea-titulo"><i class="fa-solid fa-file-alt"></i> ${escapeHtml(t.titulo)}</span>
-                    <span class="badge-grupo">${escapeHtml(t.grupoNombre)}</span>
-                </div>
-                <div class="tarea-footer">
-                    <span class="badge-nota"><i class="fa-solid fa-star"></i> ${t.nota}/10</span>
-                    <span class="fecha-entrega">${t.fechaEntrega || ""}</span>
-                </div>
-            </div>
-        `).join("") : '<div class="empty-message"><i class="fa-regular fa-star"></i><p>Aún no hay calificaciones</p></div>';
+        document.getElementById("listaNotas").innerHTML = tareas.length ? tareas.map(t => `<div class="tarea-card"><div class="tarea-header"><span class="tarea-titulo"><i class="fa-solid fa-file-alt"></i> ${escapeHtml(t.titulo)}</span><span class="badge-grupo">${escapeHtml(t.grupoNombre)}</span></div><div class="tarea-footer"><span class="badge-nota"><i class="fa-solid fa-star"></i> ${t.nota}/10</span><span class="fecha-entrega">${t.fechaEntrega || ""}</span></div></div>`).join("") : '<div class="empty-message"><i class="fa-regular fa-star"></i><p>Aún no hay calificaciones</p></div>';
     }
-
+    
     function renderizarChats() {
-        let contactosIds = new Set();
-        getMisGrupos().forEach(g => { if (g.docenteId) contactosIds.add(g.docenteId); });
-        let contactos = usuarios.filter(u => contactosIds.has(u.id) && u.id !== usuarioActual.id);
-        document.getElementById("listaChats").innerHTML = contactos.length ? contactos.map(c => `
-            <div class="mensaje-card" onclick="abrirChat(${c.id}, '${escapeHtml(c.nombre)}')">
-                <div class="grupo-header">
-                    <span><i class="fa-solid fa-user-circle"></i> ${escapeHtml(c.nombre)}</span>
-                    <small>${c.rol === "docente" ? "Docente" : ""}</small>
-                </div>
-                <div style="font-size:12px; color:#64748b">Chat</div>
+        let contactosMap = new Map();
+        getMisGrupos().forEach(g => {
+            if (g.docenteId) {
+                let docente = usuarios.find(u => u.id === g.docenteId);
+                if (docente && !contactosMap.has(`docente_${docente.id}`)) {
+                    contactosMap.set(`docente_${docente.id}`, { 
+                        id: `docente_${docente.id}`, 
+                        nombre: `${docente.nombre} (Docente)`, 
+                        tipo: "docente", 
+                        realId: docente.id,
+                        avatar: getAvatarUrl(docente.id)
+                    });
+                }
+            }
+            contactosMap.set(`grupo_${g.id}`, { 
+                id: `grupo_${g.id}`, 
+                nombre: `📢 ${g.nombre} (Grupo)`, 
+                tipo: "grupo", 
+                grupoId: g.id, 
+                esGrupo: true,
+                avatar: "./images/group-avatar.png"
+            });
+        });
+        document.getElementById("listaChats").innerHTML = Array.from(contactosMap.values()).map(c => `<div class="chat-card" onclick="abrirChat('${c.id}', '${escapeHtml(c.nombre)}', ${c.esGrupo || false}, ${c.grupoId || null}, '${c.tipo === 'docente' ? c.realId : null}')">
+            <img src="${c.avatar}" class="chat-avatar-list" onerror="this.src='${DEFAULT_AVATAR}'">
+            <div class="card-info-flex">
+                <div class="grupo-nombre">${escapeHtml(c.nombre)}</div>
+                <div style="font-size:11px; color:#64748b">${c.esGrupo ? "Grupo" : "Docente"}</div>
             </div>
-        `).join("") : '<div class="empty-message"><i class="fa-regular fa-comment"></i><p>No hay chats</p></div>';
+        </div>`).join("") || '<div class="empty-message"><i class="fa-regular fa-comment"></i><p>No hay conversaciones disponibles</p></div>';
     }
-
-    let chatAbiertoId = null, chatAbiertoNombre = "";
-
-    function abrirChat(usuarioId, nombre) {
-        chatAbiertoId = usuarioId;
-        chatAbiertoNombre = nombre;
+    
+    let chatActual = { id: null, nombre: "", esGrupo: false, grupoId: null, contactoId: null };
+    
+    function abrirChat(id, nombre, esGrupo, grupoId, contactoId) {
+        chatActual = { id, nombre, esGrupo, grupoId, contactoId: contactoId || (id.startsWith('docente_') ? parseInt(id.split('_')[1]) : null) };
         document.getElementById("chatTitulo").innerHTML = `<i class="fa-regular fa-comment"></i> Chat con ${escapeHtml(nombre)}`;
-        let mensajesChat = mensajes.filter(m => (m.deId === usuarioActual.id && m.paraId === usuarioId) || (m.deId === usuarioId && m.paraId === usuarioActual.id));
+        
+        let mensajesChat;
+        if (esGrupo) mensajesChat = mensajes.filter(m => m.grupoId === grupoId);
+        else mensajesChat = mensajes.filter(m => (m.deId === usuarioActual.id && m.paraId === chatActual.contactoId) || (m.deId === chatActual.contactoId && m.paraId === usuarioActual.id));
         mensajesChat.sort((a, b) => new Date(a.fecha) - new Date(b.fecha));
-        let html = mensajesChat.map(m => `
-            <div style="margin:8px; text-align:${m.deId === usuarioActual.id ? 'right' : 'left'}">
-                <div style="display:inline-block; background:${m.deId === usuarioActual.id ? '#2563eb' : '#e2e8f0'}; color:${m.deId === usuarioActual.id ? 'white' : '#1e293b'}; padding:8px 12px; border-radius:18px; max-width:80%">${escapeHtml(m.texto)}</div>
-                <div style="font-size:10px; color:#94a3b8">${new Date(m.fecha).toLocaleTimeString()}</div>
-            </div>
-        `).join("");
-        document.getElementById("chatMensajes").innerHTML = html || '<div style="text-align:center; padding:20px">No hay mensajes</div>';
+        
+        let html = mensajesChat.map(m => {
+            let esPropio = m.deId === usuarioActual.id;
+            let usuario = usuarios.find(u => u.id === m.deId);
+            let nombreUsuario = usuario?.nombre || "Desconocido";
+            let rolUsuario = usuario?.rol === "estudiante" ? " (Estudiante)" : (usuario?.rol === "docente" ? " (Docente)" : "");
+            let nombreMostrar = esPropio ? 'Tú' : `${nombreUsuario}${rolUsuario}`;
+            let avatarUrl = getAvatarUrl(m.deId);
+            return `<div class="chat-mensaje" style="flex-direction: ${esPropio ? 'row-reverse' : 'row'}">
+                        <img src="${avatarUrl}" class="chat-avatar" onerror="this.src='${DEFAULT_AVATAR}'">
+                        <div class="chat-burbuja ${esPropio ? 'chat-burbuja-propio' : ''}">
+                            <div class="chat-nombre">${escapeHtml(nombreMostrar)}</div>
+                            <div class="chat-texto" style="${esPropio ? 'background:#2563eb; color:white' : 'background:#e2e8f0'}">${escapeHtml(m.texto)}</div>
+                            <div class="chat-hora">${new Date(m.fecha).toLocaleTimeString()}</div>
+                        </div>
+                    </div>`;
+        }).join("");
+        
+        document.getElementById("chatMensajesArea").innerHTML = html || '<div style="text-align:center; padding:40px; color:#94a3b8">No hay mensajes aún. ¡Envía el primero!</div>';
         document.getElementById("modalChatOverlay").style.display = "flex";
-        mensajes.filter(m => m.deId === usuarioId && m.paraId === usuarioActual.id).forEach(m => { m.leido = true; });
+        
+        if (!esGrupo && chatActual.contactoId) {
+            mensajes.filter(m => m.deId === chatActual.contactoId && m.paraId === usuarioActual.id).forEach(m => { m.leido = true; });
+        }
         guardarTodo();
-        setTimeout(() => { document.getElementById("chatMensajes").scrollTop = document.getElementById("chatMensajes").scrollHeight; }, 100);
+        setTimeout(() => { document.getElementById("chatMensajesArea").scrollTop = document.getElementById("chatMensajesArea").scrollHeight; }, 100);
     }
-
-    function abrirChatDocente(docenteId) {
-        let docente = usuarios.find(u => u.id === docenteId);
-        if (docente) abrirChat(docenteId, docente.nombre);
-        else mostrarToast("Docente no encontrado", "error");
-    }
-
+    
     function enviarMensaje() {
         let texto = document.getElementById("mensajeTexto").value.trim();
-        if (!texto || !chatAbiertoId) return;
-        mensajes.push({ id: Date.now(), deId: usuarioActual.id, paraId: chatAbiertoId, texto, fecha: new Date().toISOString(), leido: false });
+        if (!texto || !chatActual.id) return;
+        let nuevoMensaje = { id: Date.now(), deId: usuarioActual.id, texto, fecha: new Date().toISOString(), leido: false };
+        if (chatActual.esGrupo) { nuevoMensaje.grupoId = chatActual.grupoId; nuevoMensaje.esGrupo = true; }
+        else nuevoMensaje.paraId = chatActual.contactoId;
+        mensajes.push(nuevoMensaje);
         guardarTodo();
         document.getElementById("mensajeTexto").value = "";
-        abrirChat(chatAbiertoId, chatAbiertoNombre);
+        abrirChat(chatActual.id, chatActual.nombre, chatActual.esGrupo, chatActual.grupoId, chatActual.contactoId);
         mostrarToast("Mensaje enviado", "success");
     }
-
-    function cerrarModalChat() {
-        document.getElementById("modalChatOverlay").style.display = "none";
-        chatAbiertoId = null;
+    
+    function cerrarModalChat() { document.getElementById("modalChatOverlay").style.display = "none"; chatActual = { id: null, nombre: "", esGrupo: false, grupoId: null, contactoId: null }; }
+    
+    function cambiarAvatar(input) {
+        if (input.files && input.files[0]) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                avatares[usuarioActual.id] = e.target.result;
+                guardarTodo();
+                document.getElementById("avatarImg").src = e.target.result;
+                renderizarChats();
+                renderizarClases();
+                mostrarToast("Foto de perfil actualizada", "success");
+            };
+            reader.readAsDataURL(input.files[0]);
+        }
     }
-
+    
     function marcarEntregada(trabajoId) {
         if (!entregas.some(e => e.trabajoId === trabajoId && e.estudianteId === usuarioActual.id)) {
             entregas.push({ id: Date.now(), trabajoId, estudianteId: usuarioActual.id, fecha: new Date().toISOString() });
@@ -925,18 +566,12 @@
             mostrarToast("¡Tarea entregada!", "success");
         }
     }
-
+    
     function unirseAClase() {
         let codigo = document.getElementById("codigoClase").value.trim().toUpperCase();
-        if (!codigo || codigo.length !== 6) {
-            mostrarToast("Código inválido", "error");
-            return;
-        }
+        if (!codigo || codigo.length !== 6) { mostrarToast("Código inválido", "error"); return; }
         let grupo = grupos.find(g => g.codigo === codigo);
-        if (!grupo) {
-            mostrarToast("Código no encontrado", "error");
-            return;
-        }
+        if (!grupo) { mostrarToast("Código no encontrado", "error"); return; }
         if (matriculas.some(m => m.estudianteId === usuarioActual.id && m.grupoId === grupo.id)) {
             mostrarToast("Ya estás en esta clase", "error");
             cerrarModalUnirse();
@@ -952,54 +587,23 @@
         renderizarTareas();
         renderizarChats();
     }
-
+    
     function cambiarSeccion(sectionId) {
         document.querySelectorAll(".dashboard").forEach(sec => sec.classList.remove("active-section"));
         document.getElementById(sectionId).classList.add("active-section");
-        document.querySelectorAll(".menu a, .bottom-nav a").forEach(link => {
-            link.classList.toggle("active", link.getAttribute("data-section") === sectionId);
-        });
+        document.querySelectorAll(".menu a, .bottom-nav a").forEach(link => { link.classList.toggle("active", link.getAttribute("data-section") === sectionId); });
         if (window.innerWidth <= 768) cerrarSidebar();
         if (sectionId === "chat") renderizarChats();
         if (sectionId === "notas") renderizarNotas();
     }
-
-    function toggleSidebar() {
-        document.getElementById("mainSidebar").classList.add("mobile-open");
-        document.getElementById("sidebarOverlay").classList.add("active");
-    }
-
-    function cerrarSidebar() {
-        document.getElementById("mainSidebar").classList.remove("mobile-open");
-        document.getElementById("sidebarOverlay").classList.remove("active");
-    }
-
-    // CORREGIDO: Solo elimina usuarioActual y sesionActiva, mantiene todos los demás datos
-    function cerrarSesion() {
-        localStorage.removeItem("usuarioActual");
-        localStorage.removeItem("sesionActiva");
-        window.location.href = "auth/login.html";
-    }
-
-    function abrirModalUnirse() {
-        document.getElementById("modalUnirseOverlay").style.display = "flex";
-        document.getElementById("codigoClase").value = "";
-    }
-
-    function cerrarModalUnirse() {
-        document.getElementById("modalUnirseOverlay").style.display = "none";
-    }
-
-    function escapeHtml(str) {
-        if (!str) return "";
-        return str.replace(/[&<>]/g, function(m) {
-            if (m === '&') return '&amp;';
-            if (m === '<') return '&lt;';
-            if (m === '>') return '&gt;';
-            return m;
-        });
-    }
-
+    
+    function toggleSidebar() { document.getElementById("mainSidebar").classList.add("mobile-open"); document.getElementById("sidebarOverlay").classList.add("active"); }
+    function cerrarSidebar() { document.getElementById("mainSidebar").classList.remove("mobile-open"); document.getElementById("sidebarOverlay").classList.remove("active"); }
+    function cerrarSesion() { localStorage.removeItem("usuarioActual"); localStorage.removeItem("sesionActiva"); window.location.href = "auth/login.html"; }
+    function abrirModalUnirse() { document.getElementById("modalUnirseOverlay").style.display = "flex"; document.getElementById("codigoClase").value = ""; }
+    function cerrarModalUnirse() { document.getElementById("modalUnirseOverlay").style.display = "none"; }
+    function escapeHtml(str) { if (!str) return ""; return str.replace(/[&<>]/g, m => m === '&' ? '&amp;' : (m === '<' ? '&lt;' : '&gt;')); }
+    
     function cargarPerfil() {
         let hora = new Date().getHours();
         let saludo = hora < 12 ? "Buenos días" : (hora < 18 ? "Buenas tardes" : "Buenas noches");
@@ -1008,25 +612,18 @@
         document.getElementById("perfilEmail").innerText = usuarioActual.correo || usuarioActual.email || "No disponible";
         document.getElementById("perfilInstituto").innerText = usuarioActual.instituto || "No especificado";
         document.getElementById("perfilFecha").innerText = usuarioActual.fechaRegistro || "2024";
+        if (avatares[usuarioActual.id]) document.getElementById("avatarImg").src = avatares[usuarioActual.id];
+        else document.getElementById("avatarImg").src = DEFAULT_AVATAR;
     }
-
-    // Event Listeners
+    
     document.querySelectorAll(".menu a, .bottom-nav a").forEach(link => {
-        link.addEventListener("click", (e) => {
-            e.preventDefault();
-            let sec = link.getAttribute("data-section");
-            if (sec) cambiarSeccion(sec);
-        });
+        link.addEventListener("click", (e) => { e.preventDefault(); let sec = link.getAttribute("data-section"); if (sec) cambiarSeccion(sec); });
     });
-
     document.getElementById("buscarGeneral")?.addEventListener("input", (e) => {
         let txt = e.target.value.toLowerCase();
-        document.querySelectorAll(".tarea-card, .grupo-card").forEach(c => {
-            c.style.display = c.innerText.toLowerCase().includes(txt) ? "block" : "none";
-        });
+        document.querySelectorAll(".tarea-card, .grupo-card, .chat-card").forEach(c => { c.style.display = c.innerText.toLowerCase().includes(txt) ? "flex" : "none"; });
     });
-
-    // Inicializar
+    
     cargarPerfil();
     renderizarClases();
     renderizarTareas();
