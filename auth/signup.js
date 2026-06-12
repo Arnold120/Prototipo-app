@@ -1,4 +1,5 @@
-const form = document.getElementById("signupForm");
+const form =
+document.getElementById("signupForm");
 
 const passwordInput =
 document.getElementById("password");
@@ -6,132 +7,292 @@ document.getElementById("password");
 const togglePassword =
 document.getElementById("togglePassword");
 
-togglePassword.addEventListener("click", () => {
+/* ======================
+   TOGGLE PASSWORD
+====================== */
+if (togglePassword && passwordInput) {
 
-    const type =
-    passwordInput.type === "password"
-    ? "text"
-    : "password";
+    togglePassword.addEventListener("click", () => {
 
-    passwordInput.type = type;
+        const type =
+            passwordInput.type === "password"
+                ? "text"
+                : "password";
 
-    togglePassword.innerHTML =
-    type === "password"
-    ? '<i class="fa-solid fa-eye"></i>'
-    : '<i class="fa-solid fa-eye-slash"></i>';
-});
+        passwordInput.type = type;
 
-form.addEventListener("submit", (e) => {
+        togglePassword.innerHTML =
+            type === "password"
+                ? '<i class="fa-solid fa-eye"></i>'
+                : '<i class="fa-solid fa-eye-slash"></i>';
+    });
+}
 
-    e.preventDefault();
+/* ======================
+   INSTITUTOS AUTOCOMPLETE
+====================== */
+const institutos = [
+    "Centro Escolar José Martí",
+    "Colegio Santa Rosa de Lima",
+    "Colegio Génesis",
+    "Instituto Nac. Ramón Matus Acevedo",
+    "Colegio San José",
+    "Instituto Nacional Manuel Hernández Martínez",
+    "Instituto Nacional Juan José Rodríguez",
+    "Academia de Santa María",
+    "Centro Escolar Pedro Joaquín Chamorro",
+    "Colegio Corazón de María",
+    "Colegio Cristiano Rubén Darío",
+    "Escuela Nueva Esperanza",
+    "Colegio Central de Nicaragua",
+    "Centro Escolar El Guabillo"
+];
 
-    const nombre =
-    document.getElementById("nombre")
-    .value.trim();
+const inputInstituto =
+document.getElementById("institutoInput");
 
-    const correo =
-    document.getElementById("correo")
-    .value.trim();
+const listaInstitutos =
+document.getElementById("listaInstitutos");
 
-    const instituto =
-    document.getElementById("instituto")
-    .value.trim();
+if (inputInstituto && listaInstitutos) {
 
-    const rol =
-    document.getElementById("rol")
-    .value;
+    inputInstituto.addEventListener("input", () => {
 
-    const password =
-    document.getElementById("password")
-    .value.trim();
+        const valor =
+        inputInstituto.value.toLowerCase();
 
-    if (
-        !nombre ||
-        !correo ||
-        !instituto ||
-        !rol ||
-        !password
-    ) {
-        alert(
-            "Complete todos los campos."
-        );
-        return;
-    }
+        listaInstitutos.innerHTML = "";
 
-    const emailRegex =
-    /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!valor) {
 
-    if (!emailRegex.test(correo)) {
+            listaInstitutos.style.display = "none";
+            return;
+        }
 
-        alert(
-            "Ingrese un correo válido."
-        );
-
-        return;
-    }
-
-    if (password.length < 6) {
-
-        alert(
-            "La contraseña debe tener al menos 6 caracteres."
+        const filtrados =
+        institutos.filter(i =>
+            i.toLowerCase().includes(valor)
         );
 
-        return;
-    }
+        if (filtrados.length === 0) {
 
-    const usuarios =
-    JSON.parse(
-        localStorage.getItem("usuariosEduClass")
-    ) || [];
+            listaInstitutos.style.display = "none";
+            return;
+        }
 
-    const existeUsuario =
-    usuarios.find(
-        usuario =>
-        usuario.correo.toLowerCase() ===
-        correo.toLowerCase()
-    );
+        filtrados.forEach(nombre => {
 
-    if (existeUsuario) {
+            const item =
+            document.createElement("div");
 
-        alert(
-            "Ya existe una cuenta registrada con este correo."
+            item.classList.add("autocomplete-item");
+
+            item.textContent = nombre;
+
+            item.addEventListener("click", () => {
+
+                inputInstituto.value = nombre;
+
+                listaInstitutos.innerHTML = "";
+                listaInstitutos.style.display = "none";
+            });
+
+            listaInstitutos.appendChild(item);
+        });
+
+        listaInstitutos.style.display = "block";
+    });
+
+    document.addEventListener("click", (e) => {
+
+        if (!e.target.closest(".autocomplete")) {
+
+            listaInstitutos.style.display = "none";
+        }
+    });
+}
+
+/* ======================
+   MODAL SYSTEM
+====================== */
+function mostrarModal({
+    titulo,
+    mensaje,
+    icono = "fa-solid fa-circle-info",
+    tipo = "info"
+}) {
+
+    const modal =
+    document.getElementById("modalMensaje");
+
+    if (!modal) return;
+
+    document.getElementById("tituloMensaje")
+        .textContent = titulo;
+
+    document.getElementById("textoMensaje")
+        .textContent = mensaje;
+
+    document.getElementById("iconoMensaje")
+        .innerHTML = `<i class="${icono}"></i>`;
+
+    modal.classList.add("show");
+
+    const contenido =
+    modal.querySelector(".modal-contenido");
+
+    if (contenido) {
+
+        contenido.classList.remove(
+            "success",
+            "error",
+            "info"
         );
 
-        return;
+        contenido.classList.add(tipo);
     }
+}
 
-    const nuevoUsuario = {
-        id: Date.now(),
-        nombre,
-        correo,
-        instituto,
-        rol,
-        password,
-        fechaRegistro:
-        new Date().toLocaleDateString()
-    };
+/* ======================
+   CLOSE MODAL
+====================== */
+const btnCerrar =
+document.getElementById("btnCerrar");
 
-    usuarios.push(nuevoUsuario);
+if (btnCerrar) {
 
-    localStorage.setItem(
-        "usuariosEduClass",
-        JSON.stringify(usuarios)
-    );
+    btnCerrar.addEventListener("click", () => {
 
-    localStorage.setItem(
-        "usuarioActual",
-        JSON.stringify(nuevoUsuario)
-    );
+        document
+        .getElementById("modalMensaje")
+        .classList.remove("show");
+    });
+}
 
-    localStorage.setItem(
-        "sesionActiva",
-        "true"
-    );
+/* ======================
+   FORM SUBMIT
+====================== */
+if (form) {
 
-    alert(
-        `Bienvenido a EduClass, ${nombre}`
-    );
+    form.addEventListener("submit", (e) => {
 
-    window.location.href =
-    "../index.html";
-});
+        e.preventDefault();
+
+        const nombre =
+        document.getElementById("nombre")
+        .value.trim();
+
+        const correo =
+        document.getElementById("correo")
+        .value.trim();
+
+        const instituto =
+        document.getElementById("institutoInput")
+        .value.trim();
+
+        const rol =
+        document.getElementById("rol")
+        .value;
+
+        const password =
+        passwordInput.value.trim();
+
+        /* Validaciones */
+        if (!nombre || !correo || !instituto || !rol || !password) {
+
+            return mostrarModal({
+                titulo: "Campos incompletos",
+                mensaje: "Debes completar todos los campos para continuar.",
+                icono: "fa-solid fa-triangle-exclamation",
+                tipo: "error"
+            });
+        }
+
+        const emailRegex =
+        /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+        if (!emailRegex.test(correo)) {
+
+            return mostrarModal({
+                titulo: "Correo inválido",
+                mensaje: "Ingresa un correo electrónico válido.",
+                icono: "fa-solid fa-envelope",
+                tipo: "error"
+            });
+        }
+
+        if (password.length < 6) {
+
+            return mostrarModal({
+                titulo: "Contraseña débil",
+                mensaje: "La contraseña debe tener al menos 6 caracteres.",
+                icono: "fa-solid fa-lock",
+                tipo: "error"
+            });
+        }
+
+        const usuarios =
+        JSON.parse(
+            localStorage.getItem("usuariosEduClass")
+        ) || [];
+
+        const existeUsuario =
+        usuarios.find(u =>
+            u.correo.toLowerCase() === correo.toLowerCase()
+        );
+
+        if (existeUsuario) {
+
+            return mostrarModal({
+                titulo: "Cuenta existente",
+                mensaje: "Ya existe una cuenta con este correo electrónico.",
+                icono: "fa-solid fa-user-xmark",
+                tipo: "error"
+            });
+        }
+
+        /* Crear usuario */
+        const nuevoUsuario = {
+            id: Date.now(),
+            nombre,
+            correo,
+            instituto,
+            rol,
+            password,
+            fechaRegistro: new Date().toLocaleDateString()
+        };
+
+        usuarios.push(nuevoUsuario);
+
+        localStorage.setItem(
+            "usuariosEduClass",
+            JSON.stringify(usuarios)
+        );
+
+        localStorage.setItem(
+            "usuarioActual",
+            JSON.stringify(nuevoUsuario)
+        );
+
+        localStorage.setItem(
+            "sesionActiva",
+            "true"
+        );
+
+        mostrarModal({
+            titulo: "Registro exitoso",
+            mensaje: `¡Bienvenido a EduClass, ${nombre}!`,
+            icono: "fa-solid fa-circle-check",
+            tipo: "success"
+        });
+
+        setTimeout(() => {
+
+            window.location.href =
+                nuevoUsuario.rol.toLowerCase() === "docente"
+                    ? "../docente/index.html"
+                    : "../index.html";
+
+        }, 1800);
+    });
+}

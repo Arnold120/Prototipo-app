@@ -372,3 +372,247 @@ html{
     }
 
 }
+
+.dashboard{
+    display:flex;
+    flex-direction:column;
+    gap:15px;
+}
+
+.search-box{
+    margin-top:20px; 
+    position:relative;
+}
+
+.search-box i{
+    position:absolute;
+    left:14px;
+    top:50%;
+    transform:translateY(-50%);
+    color:#888;
+    font-size:14px;
+}
+
+.search-box input{
+    width:100%;
+    height:48px;
+    padding:0 15px 0 42px;
+    border:none;
+    border-radius:12px;
+    background:#fff;
+    font-size:14px;
+    box-shadow:0 3px 10px rgba(0,0,0,.06);
+}
+
+.resumen-tareas{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+}
+
+.card-resumen{
+    background:#fff;
+    border-radius:14px;
+    padding:12px;
+    display:flex;
+    align-items:center;
+    gap:10px;
+    box-shadow:0 4px 10px rgba(0,0,0,.06);
+}
+
+.card-resumen h3{
+    font-size:14px;
+    margin:0;
+    color:#222;
+}
+
+.card-resumen span{
+    font-size:12px;
+    color:#666;
+}
+
+.icon-card{
+    min-width:42px;
+    width:42px;
+    height:42px;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:16px;
+}
+
+.pendientes .icon-card{
+    background:#fff7e0;
+    color:#f59e0b;
+}
+
+.entregadas .icon-card{
+    background:#dcfce7;
+    color:#22c55e;
+}
+
+.seccion-tareas{
+    display:flex;
+    flex-direction:column;
+    gap:15px;
+}
+
+.bloque-tareas{
+    background:#fff;
+    border-radius:14px;
+    padding:15px;
+    box-shadow:0 4px 10px rgba(0,0,0,.06);
+}
+
+.bloque-tareas h2{
+    font-size:16px;
+    margin:0 0 10px;
+    display:flex;
+    align-items:center;
+    gap:8px;
+    color:#222;
+}
+
+.lista-tareas{
+    margin-top:10px;
+}
+
+.tarea-card{
+    padding:12px;
+    border-radius:10px;
+    background:#f8fafc;
+    border-left:4px solid #2563eb;
+    margin-bottom:10px;
+}
+
+.tarea-card h4{
+    margin:0 0 5px;
+    font-size:14px;
+}
+
+.tarea-card p{
+    margin:0;
+    font-size:13px;
+    color:#666;
+}
+
+@media (min-width: 768px){
+
+    .seccion-tareas{
+        display:grid;
+        grid-template-columns:1fr 1fr;
+        gap:20px;
+    }
+
+    .card-resumen{
+        padding:18px;
+    }
+
+    .icon-card{
+        width:55px;
+        height:55px;
+        font-size:22px;
+    }
+}
+
+.docente-card{
+    background:#fff;
+    padding:15px;
+    margin:10px 0;
+    border-radius:12px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    box-shadow:0 4px 12px rgba(0,0,0,.08);
+}
+
+.btn-matricular{
+    background:#2563eb;
+    color:white;
+    border:none;
+    padding:8px 12px;
+    border-radius:8px;
+    cursor:pointer;
+}
+
+.modal-edu{
+    position:fixed;
+    bottom:20px;
+    left:50%;
+    transform:translateX(-50%);
+    background:#111;
+    color:white;
+    padding:12px 20px;
+    border-radius:10px;
+    display:flex;
+    gap:10px;
+    align-items:center;
+    opacity:0;
+    transition:.3s;
+}
+
+.modal-edu.show{
+    opacity:1;
+    transform:translateX(-50%) translateY(-10px);
+}
+
+.modal-edu.success{
+    background:#16a34a;
+}
+
+.empty-state{
+    background:white;
+    padding:30px 20px;
+    margin-top:20px;
+    border-radius:18px;
+    text-align:center;
+    box-shadow:0 10px 25px rgba(0,0,0,0.06);
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:12px;
+}
+
+.empty-icon{
+    width:80px;
+    height:80px;
+    background:#eff6ff;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:32px;
+    color:#2563eb;
+}
+
+.empty-state h2{
+    font-size:18px;
+    color:#0f172a;
+}
+
+.empty-state p{
+    font-size:14px;
+    color:#64748b;
+    max-width:280px;
+    line-height:1.4;
+}
+
+.empty-btn{
+    margin-top:10px;
+    padding:10px 14px;
+    border:none;
+    border-radius:10px;
+    background:#2563eb;
+    color:white;
+    display:flex;
+    align-items:center;
+    gap:8px;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+.empty-btn:hover{
+    background:#1d4ed8;
+    transform:translateY(-2px);
+}

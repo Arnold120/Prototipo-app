@@ -1,16 +1,5 @@
 @import url(./login.css);
 
-div.signup-card{
-    margin-top: -50px;
-    width:410px;
-    max-width:99.9%;
-
-    background:#050505;
-
-    border-radius:30px;
-    padding:40px;
-}
-
 body{
     margin: 10px;
     justify-content: center;
@@ -28,15 +17,21 @@ body{
     font-family:'Segoe UI',sans-serif;
 }
 
-.signup-card{
-
-    width:450px;
-    max-width:90%;
-
+div.signup-card{
+    margin-top: -50px;
+    width:410px;
+    max-width:99.9%;
     background:#050505;
-
+    max-width:420px;
+    margin:auto;
+    background: rgba(0, 0, 0, 0.0);
+    border-radius:25px;
+    color :black;
+    padding:40px;
+    box-shadow:
+    0 20px 40px rgba(0,0,0,.15);
+    animation:fadeIn .7s ease;
     border-radius:30px;
-
     padding:40px;
 }
 
@@ -129,4 +124,33 @@ body{
 .extra-links a{
     color:#5d7dff;
     text-decoration:none;
+}
+
+.autocomplete{
+    position:relative;
+}
+
+.autocomplete-list{
+    position:absolute;
+    top:100%;
+    left:0;
+    right:0;
+    background:white;
+    border-radius:10px;
+    box-shadow:0 10px 25px rgba(0,0,0,.15);
+    max-height:220px;
+    overflow-y:auto;
+    z-index:1000;
+    display:none;
+}
+
+.autocomplete-item{
+    padding:12px;
+    cursor:pointer;
+    font-size:14px;
+    border-bottom:1px solid #eee;
+}
+
+.autocomplete-item:hover{
+    background:#f3f4f6;
 }

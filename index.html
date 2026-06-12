@@ -50,7 +50,10 @@
 <header class="topbar">
 
     <div class="welcome">
-        <h1>Bienvenido 👋</h1>
+        <h1>
+            <i class="fa-solid fa-graduation-cap"></i>
+            Bienvenido
+        </h1>
         <p>EduClass - Aprende de forma interactiva</p>
     </div>
 
@@ -59,34 +62,83 @@
     </div>
 </header>
 
-<main class="main">
-    <section id="inicio" class="cards">
+<section id="inicio" class="dashboard">
 
-        <div class="card">
-            <i class="fa-solid fa-list-check"></i>
-            <h3>Tareas</h3>
-            <p>2 pendientes</p>
+    <div class="search-box">
+        <i class="fa-solid fa-magnifying-glass"></i>
+
+        <input
+            type="text"
+            id="buscarTarea"
+            placeholder="Buscar tarea..."
+        >
+    </div>
+
+    <div class="resumen-tareas">
+
+        <div class="card-resumen pendientes">
+            <div class="icon-card">
+                <i class="fa-solid fa-clock"></i>
+            </div>
+
+            <div>
+                <h3>Pendientes</h3>
+                <span id="contadorPendientes">
+                    0 tareas pendientes
+                </span>
+            </div>
         </div>
 
-        <div class="card">
-            <i class="fa-solid fa-book-open"></i>
-            <h3>Clases</h3>
-            <p>4 activas</p>
+        <div class="card-resumen entregadas">
+            <div class="icon-card">
+                <i class="fa-solid fa-circle-check"></i>
+            </div>
+
+            <div>
+                <h3>Entregadas</h3>
+                <span id="contadorEntregadas">
+                    0 tareas entregadas
+                </span>
+            </div>
         </div>
 
-        <div class="card">
-            <i class="fa-solid fa-chart-line"></i>
-            <h3>Promedio</h3>
-            <p>18.5</p>
+    </div>
+
+    <div class="seccion-tareas">
+
+        <div class="bloque-tareas">
+
+            <h2>
+                <i class="fa-solid fa-list-check"></i>
+                Tareas Pendientes
+            </h2>
+
+            <div
+                id="listaPendientes"
+                class="lista-tareas"
+            >
+            </div>
+
         </div>
 
-        <div class="card">
-            <i class="fa-solid fa-comments"></i>
-            <h3>Mensajes</h3>
-            <p>3 nuevos</p>
+        <div class="bloque-tareas">
+
+            <h2>
+                <i class="fa-solid fa-circle-check"></i>
+                Tareas Entregadas
+            </h2>
+
+            <div
+                id="listaEntregadas"
+                class="lista-tareas"
+            >
+            </div>
+
         </div>
-    </section>
-</main>
+
+    </div>
+
+</section>
 
 <nav class="bottom-nav">
 
@@ -95,7 +147,7 @@
         <span>Inicio</span>
     </a>
 
-    <a href="#tareas">
+    <a href="./admin/Tareas/tareas.html">
         <i class="fa-solid fa-list-check"></i>
         <span>Tareas</span>
     </a>
@@ -115,6 +167,26 @@
         <span>Perfil</span>
     </a>
 </nav>
+
+<div class="empty-state">
+
+    <div class="empty-icon">
+        <i class="fa-solid fa-chalkboard-user"></i>
+    </div>
+
+    <h2>Sin docentes registrados</h2>
+
+    <p>
+        No hay docentes registrados en tu instituto en este momento.
+        Cuando se agreguen, aparecerán aquí automáticamente.
+    </p>
+
+    <button class="empty-btn">
+        <i class="fa-solid fa-rotate"></i>
+        Actualizar
+    </button>
+
+</div>
 
 <div id="configPanel" class="config-panel">
     <div class="config-header">

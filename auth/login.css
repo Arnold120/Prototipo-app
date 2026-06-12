@@ -120,7 +120,7 @@ body{
 
     color: #94a3b8;
     cursor: pointer;
-    font-size: 16px; /* tamaño del ojo */
+    font-size: 16px; 
     padding: 20px;
     margin: 0px;
 }
@@ -129,7 +129,6 @@ body{
     font-weight: 300;
 }
 
-/* Ocultar botón nativo mostrar contraseña */
 
 input[type="password"]::-ms-reveal,
 input[type="password"]::-ms-clear {
@@ -234,4 +233,92 @@ input[type="password"]::-webkit-credentials-auto-fill-button {
     .logo-section h1{
         font-size:1.7rem;
     }
+}
+
+.modal-mensaje{
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,.65);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    backdrop-filter: blur(5px);
+}
+
+.modal-mensaje.show{
+    display: flex;
+}
+
+.modal-contenido{
+    width: 90%;
+    max-width: 500px;
+    background: white;
+    border-radius: 20px;
+    padding: 35px;
+    text-align: center;
+    animation: aparecer .3s ease;
+    box-shadow: 0 15px 40px rgba(0,0,0,.25);
+}
+
+@keyframes aparecer{
+    from{
+        opacity: 0;
+        transform: scale(.8);
+    }
+    to{
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.icono{
+    font-size: 70px;
+    margin-bottom: 15px;
+}
+
+.modal-contenido h2{
+    margin-bottom: 10px;
+    color: #222;
+}
+
+.modal-contenido p{
+    color: #555;
+    font-size: 17px;
+    line-height: 1.5;
+}
+
+.botones-modal{
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 25px;
+}
+
+.btn-registro,
+.btn-cerrar{
+    border: none;
+    padding: 12px 22px;
+    border-radius: 10px;
+    font-size: 15px;
+    cursor: pointer;
+    transition: .3s;
+}
+
+.btn-registro{
+    background: #2563eb;
+    color: white;
+}
+
+.btn-registro:hover{
+    background: #1d4ed8;
+}
+
+.btn-cerrar{
+    background: #e5e7eb;
+    color: #111;
+}
+
+.btn-cerrar:hover{
+    background: #d1d5db;
 }

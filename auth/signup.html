@@ -40,8 +40,19 @@
 
                 <div class="input-group">
                     <i class="fa-solid fa-school icon-left"></i>
-                    <input type="text" id="instituto"
-                        placeholder="Instituto o Centro Educativo" required>
+                    <div class="input-group autocomplete">
+                        <i class="fa-solid fa-school icon-left"></i>
+
+                        <input
+                            type="text"
+                            id="institutoInput"
+                            placeholder="Escribe tu centro educativo"
+                            autocomplete="off"
+                            required
+                        >
+
+                        <div id="listaInstitutos" class="autocomplete-list"></div>
+                    </div>
                 </div>
 
                 <div class="input-group">
@@ -89,6 +100,32 @@
 
         </div>
 
+        <div id="modalMensaje" class="modal-mensaje">
+            <div class="modal-contenido">
+
+                <div id="iconoMensaje" class="icono">
+                    <i class="fa-solid fa-circle-info"></i>
+                </div>
+
+                <h2 id="tituloMensaje">
+                    Mensaje
+                </h2>
+
+                <p id="textoMensaje">
+                    Aquí aparecerá el mensaje.
+                </p>
+
+                <div class="botones-modal">
+                    <button
+                        id="btnCerrar"
+                        class="btn-cerrar">
+                        <i class="fa-solid fa-check"></i>
+                        Entendido
+                    </button>
+                </div>
+
+            </div>
+        </div>
     </div>
 
     <script src="signup.js"></script>
