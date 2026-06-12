@@ -1,4 +1,3 @@
-// admin.js - Funciones administrativas generales
 class AdminManager {
     constructor() {
         this.data = {};
@@ -6,7 +5,6 @@ class AdminManager {
     }
     
     loadInitialData() {
-        // Cargar datos desde localStorage o inicializar
         this.data.estudiantes = JSON.parse(localStorage.getItem('admin_estudiantes')) || this.getDefaultEstudiantes();
         this.data.docentes = JSON.parse(localStorage.getItem('admin_docentes')) || this.getDefaultDocentes();
         this.data.tareas = JSON.parse(localStorage.getItem('admin_tareas')) || this.getDefaultTareas();
@@ -67,7 +65,6 @@ class AdminManager {
         localStorage.setItem('admin_notificaciones', JSON.stringify(this.data.notificaciones));
     }
     
-    // CRUD Estudiantes
     getEstudiantes() { return this.data.estudiantes; }
     addEstudiante(estudiante) {
         estudiante.id = Date.now();
@@ -89,7 +86,6 @@ class AdminManager {
         this.saveAll();
     }
     
-    // CRUD Docentes
     getDocentes() { return this.data.docentes; }
     addDocente(docente) {
         docente.id = Date.now();
@@ -111,7 +107,6 @@ class AdminManager {
         this.saveAll();
     }
     
-    // CRUD Tareas
     getTareas() { return this.data.tareas; }
     addTarea(tarea) {
         tarea.id = Date.now();

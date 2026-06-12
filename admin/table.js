@@ -1,4 +1,3 @@
-// table.js - Generador de tablas dinámicas
 class TableGenerator {
     static createTable(containerId, columns, data, options = {}) {
         const container = document.getElementById(containerId);
@@ -11,7 +10,6 @@ class TableGenerator {
         const thead = document.createElement('thead');
         const headerRow = document.createElement('tr');
         
-        // Crear encabezados
         columns.forEach(col => {
             const th = document.createElement('th');
             th.textContent = col.label;
@@ -30,7 +28,6 @@ class TableGenerator {
         
         const tbody = document.createElement('tbody');
         
-        // Crear filas de datos
         data.forEach((item, index) => {
             const row = document.createElement('tr');
             
@@ -85,7 +82,6 @@ class TableGenerator {
         table.appendChild(tbody);
         wrapper.appendChild(table);
         
-        // Limpiar y agregar nueva tabla
         container.innerHTML = '';
         container.appendChild(wrapper);
         

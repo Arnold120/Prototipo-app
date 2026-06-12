@@ -1,4 +1,3 @@
-// dashboard.js
 document.addEventListener('DOMContentLoaded', () => {
     loadDashboardData();
 });

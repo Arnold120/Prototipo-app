@@ -4,7 +4,6 @@ document.getElementById("password");
 const togglePassword =
 document.getElementById("togglePassword");
 
-// Mostrar/Ocultar contraseña
 togglePassword.addEventListener("click", () => {
 
     const type =
@@ -20,7 +19,6 @@ togglePassword.addEventListener("click", () => {
     : '<i class="fa-solid fa-eye-slash"></i>';
 });
 
-// Login
 document
 .getElementById("loginForm")
 .addEventListener("submit", (e) => {
@@ -35,13 +33,11 @@ document
     document.getElementById("password")
     .value.trim();
 
-    // Obtener todos los usuarios
     const usuarios =
     JSON.parse(
         localStorage.getItem("usuariosEduClass")
     ) || [];
 
-    // Buscar usuario
     const usuarioEncontrado =
     usuarios.find(usuario =>
         usuario.correo.toLowerCase() ===
@@ -58,7 +54,6 @@ document
         return;
     }
 
-    // Guardar sesión
     localStorage.setItem(
         "usuarioActual",
         JSON.stringify(usuarioEncontrado)
