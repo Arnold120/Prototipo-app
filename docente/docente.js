@@ -15,6 +15,11 @@ let grupoAvatares = JSON.parse(localStorage.getItem("grupoAvatares")) || {};
 
 if (!usuarios.find(u => u.id === usuarioActual.id)) usuarios.push(usuarioActual);
 
+console.log("=== DOCENTE INICIADO ===");
+console.log("ID Docente:", usuarioActual.id);
+console.log("Nombre Docente:", usuarioActual.nombre);
+console.log("Mensajes existentes:", mensajes.length);
+
 function guardarTodo() {
     localStorage.setItem("gruposDocente", JSON.stringify(grupos));
     localStorage.setItem("trabajosDocente", JSON.stringify(trabajos));
@@ -50,49 +55,17 @@ function actualizarContadores() {
 function getAvatarUrl(userId) { return avatares[userId] || DEFAULT_AVATAR; }
 function getGrupoAvatarUrl(grupoId) { return grupoAvatares[grupoId] || DEFAULT_GROUP_AVATAR; }
 
-function cambiarGrupoAvatar(grupoId, input) {
-    if (input.files && input.files[0]) {
-        const reader = new FileReader();
-        reader.onload = function(e) {
-            grupoAvatares[grupoId] = e.target.result;
-            guardarTodo();
-            renderizarGrupos();
-            renderizarChats();
-            mostrarToast("Foto de grupo actualizada", "success");
-        };
-        reader.readAsDataURL(input.files[0]);
-    }
-}
-
 function renderizarGrupos() {
     let misGrupos = grupos.filter(g => g.docenteId === usuarioActual.id);
-    const fn = (g) => {
-        const grupoAvatar = getGrupoAvatarUrl(g.id);
-        return `<div class="grupo-card">
-                    <div class="grupo-avatar-wrapper">
-                        <img src="${grupoAvatar}" class="chat-avatar-list" onclick="event.stopPropagation();document.getElementById('grupoAvatarInput_${g.id}').click()" onerror="this.src='${DEFAULT_GROUP_AVATAR}'">
-                        <div class="avatar-edit-icon-small" onclick="event.stopPropagation();document.getElementById('grupoAvatarInput_${g.id}').click()"><i class="fa-solid fa-camera"></i></div>
-                        <input type="file" id="grupoAvatarInput_${g.id}" accept="image/*" style="display:none" onchange="cambiarGrupoAvatar(${g.id}, this)">
-                    </div>
-                    <div class="card-info-flex">
-                        <div class="grupo-nombre"><i class="fa-solid fa-chalkboard"></i> ${escapeHtml(g.nombre)}</div>
-                        <div class="grupo-desc">${escapeHtml(g.descripcion || "Sin descripción")}</div>
-                        <div class="grupo-footer" style="margin-top:8px;">
-                            <span><i class="fa-solid fa-user-graduate"></i> ${g.estudiantes?.length || 0} estudiantes</span>
-                            <span class="codigo-clase" onclick="copiarCodigo('${g.codigo}')">📋 ${g.codigo}</span>
-                            <button class="btn-eliminar" onclick="eliminarGrupo(${g.id})"><i class="fa-solid fa-trash"></i> Eliminar</button>
-                        </div>
-                    </div>
-                </div>`;
-    };
-    document.getElementById("listaGruposRecientes").innerHTML = misGrupos.length ? misGrupos.slice(0, 3).map(fn).join("") : '<div class="empty-message"><i class="fa-regular fa-folder-open"></i><p>No hay grupos</p></div>';
-    document.getElementById("listaGruposCompleta").innerHTML = misGrupos.length ? misGrupos.map(fn).join("") : '<div class="empty-message"><i class="fa-regular fa-folder-open"></i><p>No hay grupos creados</p></div>';
+    const fn = (g) => `<div class="grupo-card"><div><div class="grupo-nombre"><i class="fa-solid fa-chalkboard"></i> ${escapeHtml(g.nombre)}</div><div class="grupo-desc">${escapeHtml(g.descripcion || "Sin descripción")}</div><div class="grupo-footer"><span><i class="fa-solid fa-user-graduate"></i> ${g.estudiantes?.length || 0} estudiantes</span><span class="codigo-clase" onclick="copiarCodigo('${g.codigo}')">📋 ${g.codigo}</span><button class="btn-eliminar" onclick="eliminarGrupo(${g.id})">Eliminar</button></div></div></div>`;
+    document.getElementById("listaGruposRecientes").innerHTML = misGrupos.length ? misGrupos.slice(0, 3).map(fn).join("") : '<div class="empty-message">No hay grupos</div>';
+    document.getElementById("listaGruposCompleta").innerHTML = misGrupos.length ? misGrupos.map(fn).join("") : '<div class="empty-message">No hay grupos creados</div>';
     actualizarContadores();
 }
 
 function renderizarTrabajos() {
     let misTrabajos = trabajos.filter(t => t.docenteId === usuarioActual.id);
-    document.getElementById("listaTrabajos").innerHTML = misTrabajos.length ? misTrabajos.map(t => `<div class="trabajo-card"><div class="card-info-flex"><div class="trabajo-titulo"><i class="fa-solid fa-file-alt"></i> ${escapeHtml(t.titulo)}</div><div class="trabajo-desc">${escapeHtml(t.descripcion)}</div><div class="trabajo-footer"><span><i class="fa-regular fa-calendar"></i> ${t.fechaEntrega || "Sin fecha"}</span><button class="btn-eliminar" onclick="eliminarTrabajo(${t.id})"><i class="fa-solid fa-trash"></i> Eliminar</button></div></div></div>`).join("") : '<div class="empty-message"><i class="fa-regular fa-file"></i><p>No hay trabajos</p></div>';
+    document.getElementById("listaTrabajos").innerHTML = misTrabajos.length ? misTrabajos.map(t => `<div class="trabajo-card"><div><div class="trabajo-titulo">${escapeHtml(t.titulo)}</div><div class="trabajo-desc">${escapeHtml(t.descripcion)}</div><div class="trabajo-footer"><span>${t.fechaEntrega || "Sin fecha"}</span><button class="btn-eliminar" onclick="eliminarTrabajo(${t.id})">Eliminar</button></div></div></div>`).join("") : '<div class="empty-message">No hay trabajos</div>';
     actualizarContadores();
 }
 
@@ -104,7 +77,7 @@ function renderizarEntregas() {
         let estudiante = usuarios.find(u => u.id === e.estudianteId);
         return { ...e, trabajoNombre: trabajo?.titulo || "Sin título", estudianteNombre: estudiante?.nombre || "Desconocido" };
     });
-    document.getElementById("listaEntregas").innerHTML = misEntregas.length ? misEntregas.map(e => `<div class="entrega-card"><div class="card-info-flex"><div><strong>${escapeHtml(e.estudianteNombre)}</strong> - ${escapeHtml(e.trabajoNombre)}</div><div class="trabajo-desc">Entregado: ${new Date(e.fecha).toLocaleDateString()}</div><div class="grupo-footer"><input type="number" id="nota-${e.id}" class="nota-input" placeholder="Nota" value="${e.nota || ''}" step="0.1" min="0" max="10"><button class="btn-eliminar" style="background:#2563eb; color:white; padding:6px 12px; border-radius:10px;" onclick="calificarEntrega(${e.id})"><i class="fa-solid fa-save"></i> Calificar</button></div></div></div>`).join("") : '<div class="empty-message"><i class="fa-regular fa-clock"></i><p>No hay entregas de estudiantes</p></div>';
+    document.getElementById("listaEntregas").innerHTML = misEntregas.length ? misEntregas.map(e => `<div class="entrega-card"><div><strong>${escapeHtml(e.estudianteNombre)}</strong> - ${escapeHtml(e.trabajoNombre)}<br>Entregado: ${new Date(e.fecha).toLocaleDateString()}<br><input type="number" id="nota-${e.id}" placeholder="Nota" value="${e.nota || ''}" step="0.1" min="0" max="10"><button onclick="calificarEntrega(${e.id})">Calificar</button></div></div>`).join("") : '<div class="empty-message">No hay entregas</div>';
 }
 
 function calificarEntrega(entregaId) {
@@ -114,32 +87,36 @@ function calificarEntrega(entregaId) {
     if (isNaN(nota)) nota = 0;
     entrega.nota = Math.min(10, Math.max(0, nota));
     guardarTodo();
-    mostrarToast("Nota guardada correctamente", "success");
+    mostrarToast("Nota guardada", "success");
     renderizarEntregas();
 }
 
-// FUNCIÓN RENDERIZAR CHATS CORREGIDA
+// ========== FUNCIONES DE CHAT CORREGIDAS PARA DOCENTE ==========
 function renderizarChats() {
+    console.log("=== RENDERIZANDO CHATS ===");
     let contactosMap = new Map();
+    
+    // Agregar estudiantes (usando ID numérico)
     grupos.filter(g => g.docenteId === usuarioActual.id).forEach(g => {
         if (g.estudiantes) g.estudiantes.forEach(eId => {
             let estudiante = usuarios.find(u => u.id === eId);
             if (estudiante && !contactosMap.has(estudiante.id)) {
+                console.log("Agregando estudiante al chat:", estudiante.id, estudiante.nombre);
                 contactosMap.set(estudiante.id, { 
                     id: estudiante.id,
-                    nombre: estudiante.nombre,
-                    nombreMostrar: `${estudiante.nombre} (Estudiante)`,
+                    nombre: `${estudiante.nombre} (Estudiante)`,
                     tipo: "estudiante",
                     avatar: getAvatarUrl(estudiante.id)
                 });
             }
         });
     });
+    
+    // Agregar grupos
     grupos.filter(g => g.docenteId === usuarioActual.id).forEach(g => {
         contactosMap.set(`grupo_${g.id}`, { 
             id: `grupo_${g.id}`, 
-            nombre: g.nombre,
-            nombreMostrar: `📢 ${g.nombre} (Grupo)`,
+            nombre: `📢 ${g.nombre} (Grupo)`,
             tipo: "grupo", 
             grupoId: g.id, 
             esGrupo: true,
@@ -147,34 +124,42 @@ function renderizarChats() {
         });
     });
     
-    document.getElementById("listaChats").innerHTML = Array.from(contactosMap.values()).map(c => {
-        const tipoTexto = c.tipo === "estudiante" ? "Estudiante" : "Grupo";
-        return `<div class="chat-card" onclick="abrirChat('${c.id}', '${escapeHtml(c.nombreMostrar)}', ${c.esGrupo || false}, ${c.grupoId || null})">
-                    <img src="${c.avatar}" class="chat-avatar-list" onerror="this.src='${DEFAULT_AVATAR}'">
-                    <div class="card-info-flex">
-                        <div class="grupo-nombre">${escapeHtml(c.nombreMostrar)}</div>
-                        <div style="font-size:12px; color:#64748b">${tipoTexto}</div>
-                    </div>
-                </div>`;
-    }).join("") || '<div class="empty-message"><i class="fa-regular fa-comment"></i><p>No hay conversaciones disponibles</p></div>';
+    let chatsHTML = Array.from(contactosMap.values()).map(c => `
+        <div class="chat-card" onclick="abrirChat('${c.id}', '${escapeHtml(c.nombre)}', ${c.esGrupo || false}, ${c.grupoId || null})">
+            <img src="${c.avatar}" class="chat-avatar-list" onerror="this.src='${DEFAULT_AVATAR}'">
+            <div class="card-info-flex">
+                <div class="grupo-nombre">${escapeHtml(c.nombre)}</div>
+                <div style="font-size:12px; color:#64748b">${c.tipo === "estudiante" ? "Estudiante" : "Grupo"}</div>
+            </div>
+        </div>
+    `).join("");
+    
+    document.getElementById("listaChats").innerHTML = chatsHTML || '<div class="empty-message">No hay conversaciones</div>';
 }
 
 let chatActual = { id: null, nombre: "", esGrupo: false, grupoId: null };
 
-// FUNCIÓN ABRIR CHAT CORREGIDA
 function abrirChat(id, nombre, esGrupo, grupoId) {
-    chatActual = { id, nombre, esGrupo, grupoId };
+    console.log("=== ABRIENDO CHAT ===");
+    console.log("ID recibido:", id, "Tipo:", typeof id);
+    console.log("esGrupo:", esGrupo);
+    
+    chatActual = { id: id.toString(), nombre, esGrupo, grupoId };
     document.getElementById("chatTitulo").innerHTML = `<i class="fa-regular fa-comment"></i> Chat con ${escapeHtml(nombre)}`;
     
-    let mensajesChat;
+    let mensajesChat = [];
     if (esGrupo) {
         mensajesChat = mensajes.filter(m => m.grupoId === grupoId);
+        console.log("Mensajes de grupo encontrados:", mensajesChat.length);
     } else {
-        const idNumero = typeof id === 'string' ? parseInt(id) : id;
+        const idNumero = parseInt(id);
+        console.log("ID convertido a número:", idNumero);
         mensajesChat = mensajes.filter(m => 
             (m.deId === usuarioActual.id && m.paraId === idNumero) || 
             (m.deId === idNumero && m.paraId === usuarioActual.id)
         );
+        console.log("Mensajes encontrados:", mensajesChat.length);
+        mensajesChat.forEach(m => console.log("Mensaje:", m));
     }
     mensajesChat.sort((a, b) => new Date(a.fecha) - new Date(b.fecha));
     
@@ -182,57 +167,112 @@ function abrirChat(id, nombre, esGrupo, grupoId) {
         let esPropio = m.deId === usuarioActual.id;
         let usuario = usuarios.find(u => u.id === m.deId);
         let nombreUsuario = usuario?.nombre || "Desconocido";
-        let rolUsuario = usuario?.rol === "estudiante" ? " (Estudiante)" : (usuario?.rol === "docente" ? " (Docente)" : "");
-        let nombreMostrarEnChat = esPropio ? 'Tú' : `${nombreUsuario}${rolUsuario}`;
         let avatarUrl = getAvatarUrl(m.deId);
         return `<div class="chat-mensaje" style="flex-direction: ${esPropio ? 'row-reverse' : 'row'}">
                     <img src="${avatarUrl}" class="chat-avatar" onerror="this.src='${DEFAULT_AVATAR}'">
                     <div class="chat-burbuja ${esPropio ? 'chat-burbuja-propio' : ''}">
-                        <div class="chat-nombre">${escapeHtml(nombreMostrarEnChat)}</div>
-                        <div class="chat-texto" style="${esPropio ? 'background:#2563eb; color:white' : 'background:#e2e8f0'}">${escapeHtml(m.texto)}</div>
+                        <div class="chat-nombre">${esPropio ? 'Tú' : escapeHtml(nombreUsuario)}</div>
+                        <div class="chat-texto">${escapeHtml(m.texto)}</div>
                         <div class="chat-hora">${new Date(m.fecha).toLocaleTimeString()}</div>
                     </div>
                 </div>`;
     }).join("");
     
-    document.getElementById("chatMensajesArea").innerHTML = html || '<div style="text-align:center; padding:40px; color:#94a3b8">No hay mensajes aún. ¡Envía el primero!</div>';
+    document.getElementById("chatMensajesArea").innerHTML = html || '<div style="text-align:center; padding:40px;">No hay mensajes aún</div>';
     document.getElementById("modalChatOverlay").style.display = "flex";
     
+    // Marcar mensajes como leídos
     if (!esGrupo) {
-        const idNumero = typeof id === 'string' ? parseInt(id) : id;
-        mensajes.filter(m => m.deId === idNumero && m.paraId === usuarioActual.id && !m.leido).forEach(m => { m.leido = true; });
+        const idNumero = parseInt(id);
+        let marcados = 0;
+        mensajes.forEach(m => {
+            if (m.deId === idNumero && m.paraId === usuarioActual.id && !m.leido) {
+                m.leido = true;
+                marcados++;
+            }
+        });
+        if (marcados > 0) {
+            guardarTodo();
+            actualizarContadores();
+            console.log("Mensajes marcados como leídos:", marcados);
+        }
     }
-    guardarTodo();
-    setTimeout(() => { document.getElementById("chatMensajesArea").scrollTop = document.getElementById("chatMensajesArea").scrollHeight; }, 100);
+    
+    setTimeout(() => { 
+        const area = document.getElementById("chatMensajesArea");
+        if (area) area.scrollTop = area.scrollHeight; 
+    }, 100);
 }
 
-// FUNCIÓN ENVIAR MENSAJE CORREGIDA
 function enviarMensaje() {
     let texto = document.getElementById("mensajeTexto").value.trim();
     if (!texto || !chatActual.id) return;
     
-    let nuevoMensaje = { id: Date.now(), deId: usuarioActual.id, texto, fecha: new Date().toISOString(), leido: false };
+    console.log("=== ENVIANDO MENSAJE ===");
+    console.log("chatActual:", chatActual);
+    
+    let nuevoMensaje = { 
+        id: Date.now(), 
+        deId: usuarioActual.id, 
+        texto, 
+        fecha: new Date().toISOString(), 
+        leido: false 
+    };
+    
     if (chatActual.esGrupo) {
         nuevoMensaje.grupoId = chatActual.grupoId;
         nuevoMensaje.esGrupo = true;
+        console.log("Mensaje de grupo, grupoId:", chatActual.grupoId);
     } else {
-        nuevoMensaje.paraId = typeof chatActual.id === 'string' ? parseInt(chatActual.id) : chatActual.id;
+        nuevoMensaje.paraId = parseInt(chatActual.id);
+        console.log("Mensaje a estudiante, paraId:", nuevoMensaje.paraId);
     }
+    
     mensajes.push(nuevoMensaje);
     guardarTodo();
+    
+    console.log("Mensaje guardado. Total mensajes:", mensajes.length);
+    console.log("Último mensaje:", nuevoMensaje);
+    
     document.getElementById("mensajeTexto").value = "";
     abrirChat(chatActual.id, chatActual.nombre, chatActual.esGrupo, chatActual.grupoId);
     mostrarToast("Mensaje enviado", "success");
+    
+    // Actualizar contador de mensajes no leídos
+    actualizarContadores();
 }
 
-function cerrarModalChat() { document.getElementById("modalChatOverlay").style.display = "none"; chatActual = { id: null, nombre: "", esGrupo: false, grupoId: null }; }
+function cerrarModalChat() { 
+    document.getElementById("modalChatOverlay").style.display = "none"; 
+    chatActual = { id: null, nombre: "", esGrupo: false, grupoId: null };
+}
+
+// Función para sincronizar mensajes periódicamente
+function sincronizarMensajes() {
+    const nuevosMensajes = JSON.parse(localStorage.getItem("mensajesEduClass")) || [];
+    if (nuevosMensajes.length !== mensajes.length) {
+        console.log("Nuevos mensajes detectados. Actualizando...");
+        mensajes.length = 0;
+        mensajes.push(...nuevosMensajes);
+        // Si el chat está abierto, recargar
+        if (chatActual.id) {
+            abrirChat(chatActual.id, chatActual.nombre, chatActual.esGrupo, chatActual.grupoId);
+        }
+        actualizarContadores();
+        renderizarChats();
+    }
+}
+
+// Sincronizar cada 2 segundos
+setInterval(sincronizarMensajes, 2000);
+// ========== FIN FUNCIONES DE CHAT ==========
 
 function renderizarEstudiantes() {
     let misGrupos = grupos.filter(g => g.docenteId === usuarioActual.id);
     let estudiantesSet = new Map();
     misGrupos.forEach(g => { (g.estudiantes || []).forEach(eId => { let est = usuarios.find(u => u.id === eId); if (est) estudiantesSet.set(est.id, est); }); });
     let lista = Array.from(estudiantesSet.values());
-    document.getElementById("listaEstudiantes").innerHTML = lista.length ? lista.map(e => `<div class="grupo-card"><img src="${getAvatarUrl(e.id)}" class="chat-avatar-list" onerror="this.src='${DEFAULT_AVATAR}'"><div class="card-info-flex"><div class="grupo-nombre">${escapeHtml(e.nombre)}</div><div class="grupo-desc">${escapeHtml(e.correo || e.email)}</div><div class="grupo-footer"><button class="btn-eliminar" style="background:#2563eb; color:white; padding:6px 12px; border-radius:10px;" onclick="abrirChat('${e.id}', '${escapeHtml(e.nombre)} (Estudiante)', false, null)"><i class="fa-regular fa-comment"></i> Mensaje</button></div></div></div>`).join("") : '<div class="empty-message"><i class="fa-regular fa-user"></i><p>No hay estudiantes</p></div>';
+    document.getElementById("listaEstudiantes").innerHTML = lista.length ? lista.map(e => `<div class="grupo-card"><img src="${getAvatarUrl(e.id)}" class="chat-avatar-list" onerror="this.src='${DEFAULT_AVATAR}'"><div><div class="grupo-nombre">${escapeHtml(e.nombre)}</div><div>${escapeHtml(e.correo || e.email)}</div><button class="btn-eliminar" style="background:#2563eb; color:white;" onclick="abrirChat('${e.id}', '${escapeHtml(e.nombre)} (Estudiante)', false, null)">Mensaje</button></div></div>`).join("") : '<div class="empty-message">No hay estudiantes</div>';
     document.getElementById("buscarEstudiante")?.addEventListener("input", (e) => { let txt = e.target.value.toLowerCase(); document.querySelectorAll("#listaEstudiantes .grupo-card").forEach(c => c.style.display = c.innerText.toLowerCase().includes(txt) ? "flex" : "none"); });
 }
 
@@ -245,7 +285,7 @@ function cambiarAvatar(input) {
             document.getElementById("avatarImg").src = e.target.result;
             renderizarChats();
             renderizarEstudiantes();
-            mostrarToast("Foto de perfil actualizada", "success");
+            mostrarToast("Foto actualizada", "success");
         };
         reader.readAsDataURL(input.files[0]);
     }
@@ -264,7 +304,7 @@ function crearGrupo() {
     mostrarToast(`Grupo "${nombre}" creado. Código: ${codigo}`, "success");
 }
 
-function eliminarGrupo(id) { if (confirm("¿Eliminar este grupo?")) { grupos = grupos.filter(g => g.id !== id); trabajos = trabajos.filter(t => t.grupoId !== id); guardarTodo(); renderizarGrupos(); renderizarTrabajos(); renderizarEstudiantes(); renderizarChats(); mostrarToast("Grupo eliminado", "success"); } }
+function eliminarGrupo(id) { if (confirm("¿Eliminar grupo?")) { grupos = grupos.filter(g => g.id !== id); trabajos = trabajos.filter(t => t.grupoId !== id); guardarTodo(); renderizarGrupos(); renderizarTrabajos(); renderizarEstudiantes(); renderizarChats(); mostrarToast("Grupo eliminado", "success"); } }
 
 function asignarTrabajo() {
     let grupoId = document.getElementById("trabajoGrupo").value;
@@ -314,4 +354,12 @@ document.querySelectorAll(".menu a, .bottom-nav a").forEach(link => { link.addEv
 document.getElementById("overlay")?.addEventListener("click", cerrarSidebar);
 document.getElementById("buscarGeneral")?.addEventListener("input", (e) => { let txt = e.target.value.toLowerCase(); document.querySelectorAll(".grupo-card, .trabajo-card, .entrega-card").forEach(c => c.style.display = c.innerText.toLowerCase().includes(txt) ? "flex" : "none"); });
 
-cargarPerfil(); renderizarGrupos(); renderizarTrabajos(); renderizarEstudiantes(); renderizarChats();
+cargarPerfil(); 
+renderizarGrupos(); 
+renderizarTrabajos(); 
+renderizarEstudiantes(); 
+renderizarChats();
+
+console.log("=== INICIALIZACIÓN COMPLETADA ===");
+console.log("Grupos del docente:", grupos.filter(g => g.docenteId === usuarioActual.id).length);
+console.log("Estudiantes totales:", document.querySelectorAll("#listaEstudiantes .grupo-card").length);

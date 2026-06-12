@@ -1,4 +1,4 @@
-// ==================== CONFIGURACIÓN DE IMÁGENES PREDETERMINADAS ====================
+// ==================== CONFIGURACIÓN ====================
 const DEFAULT_AVATAR = "./images/avatar.png";
 const DEFAULT_GROUP_AVATAR = "./images/avatar.png";
 
@@ -69,7 +69,7 @@ function renderizarTareas() {
 
 function renderizarClases() {
     let misGrupos = getMisGrupos();
-    document.getElementById("listaClases").innerHTML = misGrupos.length ? misGrupos.map(g => `<div class="grupo-card"><img src="${getGrupoAvatarUrl(g.id)}" class="chat-avatar-list" onerror="this.src='${DEFAULT_GROUP_AVATAR}'"><div class="card-info-flex"><div class="grupo-nombre"><i class="fa-solid fa-chalkboard"></i> ${escapeHtml(g.nombre)}</div><div class="grupo-desc">${escapeHtml(g.descripcion || "Sin descripción")}</div><div class="grupo-footer"><span><i class="fa-solid fa-code"></i> Código: ${g.codigo}</span><button class="btn-primary" style="padding:4px 12px; font-size:11px" onclick="abrirChat('docente_${g.docenteId}', '${escapeHtml(g.nombre)} (Docente)', false, null)"><i class="fa-regular fa-comment"></i> Contactar</button></div></div></div>`).join("") : '<div class="empty-message"><i class="fa-regular fa-folder-open"></i><p>No hay clases</p><button class="btn-unirse" onclick="abrirModalUnirse()">Unirse</button></div>';
+    document.getElementById("listaClases").innerHTML = misGrupos.length ? misGrupos.map(g => `<div class="grupo-card"><img src="${getGrupoAvatarUrl(g.id)}" class="chat-avatar-list" onerror="this.src='${DEFAULT_GROUP_AVATAR}'"><div class="card-info-flex"><div class="grupo-nombre"><i class="fa-solid fa-chalkboard"></i> ${escapeHtml(g.nombre)}</div><div class="grupo-desc">${escapeHtml(g.descripcion || "Sin descripción")}</div><div class="grupo-footer"><span><i class="fa-solid fa-code"></i> Código: ${g.codigo}</span><button class="btn-primary" style="padding:4px 12px; font-size:11px" onclick="abrirChat('${g.docenteId}', '${escapeHtml(g.nombre)} (Docente)', false, null)"><i class="fa-regular fa-comment"></i> Contactar</button></div></div></div>`).join("") : '<div class="empty-message"><i class="fa-regular fa-folder-open"></i><p>No hay clases</p><button class="btn-unirse" onclick="abrirModalUnirse()">Unirse</button></div>';
 }
 
 function renderizarNotas() {
@@ -77,48 +77,62 @@ function renderizarNotas() {
     document.getElementById("listaNotas").innerHTML = tareas.length ? tareas.map(t => `<div class="tarea-card"><div class="tarea-header"><span class="tarea-titulo"><i class="fa-solid fa-file-alt"></i> ${escapeHtml(t.titulo)}</span><span class="badge-grupo">${escapeHtml(t.grupoNombre)}</span></div><div class="tarea-footer"><span class="badge-nota"><i class="fa-solid fa-star"></i> ${t.nota}/10</span><span class="fecha-entrega">${t.fechaEntrega || ""}</span></div></div>`).join("") : '<div class="empty-message"><i class="fa-regular fa-star"></i><p>Aún no hay calificaciones</p></div>';
 }
 
+// ========== FUNCIONES DE CHAT CORREGIDAS ==========
 function renderizarChats() {
     let contactosMap = new Map();
+    
     getMisGrupos().forEach(g => {
+        // Agregar docente (usando ID numérico directamente)
         if (g.docenteId) {
             let docente = usuarios.find(u => u.id === g.docenteId);
-            if (docente && !contactosMap.has(`docente_${docente.id}`)) {
-                contactosMap.set(`docente_${docente.id}`, { 
-                    id: `docente_${docente.id}`, 
-                    nombre: `${docente.nombre} (Docente)`, 
-                    tipo: "docente", 
-                    realId: docente.id,
-                    avatar: getAvatarUrl(docente.id)
+            if (docente && !contactosMap.has(g.docenteId)) {
+                contactosMap.set(g.docenteId, { 
+                    id: g.docenteId,
+                    nombre: `${docente.nombre} (Docente)`,
+                    tipo: "docente",
+                    avatar: getAvatarUrl(g.docenteId)
                 });
             }
         }
+        // Agregar grupo
         contactosMap.set(`grupo_${g.id}`, { 
             id: `grupo_${g.id}`, 
-            nombre: `📢 ${g.nombre} (Grupo)`, 
+            nombre: `📢 ${g.nombre} (Grupo)`,
             tipo: "grupo", 
             grupoId: g.id, 
             esGrupo: true,
             avatar: getGrupoAvatarUrl(g.id)
         });
     });
-    document.getElementById("listaChats").innerHTML = Array.from(contactosMap.values()).map(c => `<div class="chat-card" onclick="abrirChat('${c.id}', '${escapeHtml(c.nombre)}', ${c.esGrupo || false}, ${c.grupoId || null}, '${c.tipo === 'docente' ? c.realId : null}')">
-        <img src="${c.avatar}" class="chat-avatar-list" onerror="this.src='${DEFAULT_AVATAR}'">
-        <div class="card-info-flex">
-            <div class="grupo-nombre">${escapeHtml(c.nombre)}</div>
-            <div style="font-size:11px; color:#64748b">${c.esGrupo ? "Grupo" : "Docente"}</div>
+    
+    document.getElementById("listaChats").innerHTML = Array.from(contactosMap.values()).map(c => `
+        <div class="chat-card" onclick="abrirChat('${c.id}', '${escapeHtml(c.nombre)}', ${c.esGrupo || false}, ${c.grupoId || null})">
+            <img src="${c.avatar}" class="chat-avatar-list" onerror="this.src='${DEFAULT_AVATAR}'">
+            <div class="card-info-flex">
+                <div class="grupo-nombre">${escapeHtml(c.nombre)}</div>
+                <div style="font-size:11px; color:#64748b">${c.tipo === "docente" ? "Docente" : "Grupo"}</div>
+            </div>
         </div>
-    </div>`).join("") || '<div class="empty-message"><i class="fa-regular fa-comment"></i><p>No hay conversaciones disponibles</p></div>';
+    `).join("") || '<div class="empty-message"><i class="fa-regular fa-comment"></i><p>No hay conversaciones disponibles</p></div>';
 }
 
-let chatActual = { id: null, nombre: "", esGrupo: false, grupoId: null, contactoId: null };
+let chatActual = { id: null, nombre: "", esGrupo: false, grupoId: null };
 
-function abrirChat(id, nombre, esGrupo, grupoId, contactoId) {
-    chatActual = { id, nombre, esGrupo, grupoId, contactoId: contactoId || (id.startsWith('docente_') ? parseInt(id.split('_')[1]) : null) };
+function abrirChat(id, nombre, esGrupo, grupoId) {
+    // Guardar el ID tal como viene (puede ser número o string con grupo_)
+    chatActual = { id: id.toString(), nombre, esGrupo, grupoId };
     document.getElementById("chatTitulo").innerHTML = `<i class="fa-regular fa-comment"></i> Chat con ${escapeHtml(nombre)}`;
     
-    let mensajesChat;
-    if (esGrupo) mensajesChat = mensajes.filter(m => m.grupoId === grupoId);
-    else mensajesChat = mensajes.filter(m => (m.deId === usuarioActual.id && m.paraId === chatActual.contactoId) || (m.deId === chatActual.contactoId && m.paraId === usuarioActual.id));
+    let mensajesChat = [];
+    if (esGrupo) {
+        mensajesChat = mensajes.filter(m => m.grupoId === grupoId);
+    } else {
+        const idNumero = parseInt(id);
+        mensajesChat = mensajes.filter(m => 
+            (m.deId === usuarioActual.id && m.paraId === idNumero) || 
+            (m.deId === idNumero && m.paraId === usuarioActual.id)
+        );
+    }
     mensajesChat.sort((a, b) => new Date(a.fecha) - new Date(b.fecha));
     
     let html = mensajesChat.map(m => {
@@ -141,27 +155,51 @@ function abrirChat(id, nombre, esGrupo, grupoId, contactoId) {
     document.getElementById("chatMensajesArea").innerHTML = html || '<div style="text-align:center; padding:40px; color:#94a3b8">No hay mensajes aún. ¡Envía el primero!</div>';
     document.getElementById("modalChatOverlay").style.display = "flex";
     
-    if (!esGrupo && chatActual.contactoId) {
-        mensajes.filter(m => m.deId === chatActual.contactoId && m.paraId === usuarioActual.id).forEach(m => { m.leido = true; });
+    // Marcar mensajes como leídos
+    if (!esGrupo) {
+        const idNumero = parseInt(id);
+        mensajes.forEach(m => {
+            if (m.deId === idNumero && m.paraId === usuarioActual.id && !m.leido) {
+                m.leido = true;
+            }
+        });
+        guardarTodo();
     }
-    guardarTodo();
+    
     setTimeout(() => { document.getElementById("chatMensajesArea").scrollTop = document.getElementById("chatMensajesArea").scrollHeight; }, 100);
 }
 
 function enviarMensaje() {
     let texto = document.getElementById("mensajeTexto").value.trim();
     if (!texto || !chatActual.id) return;
-    let nuevoMensaje = { id: Date.now(), deId: usuarioActual.id, texto, fecha: new Date().toISOString(), leido: false };
-    if (chatActual.esGrupo) { nuevoMensaje.grupoId = chatActual.grupoId; nuevoMensaje.esGrupo = true; }
-    else nuevoMensaje.paraId = chatActual.contactoId;
+    
+    let nuevoMensaje = { 
+        id: Date.now(), 
+        deId: usuarioActual.id, 
+        texto, 
+        fecha: new Date().toISOString(), 
+        leido: false 
+    };
+    
+    if (chatActual.esGrupo) {
+        nuevoMensaje.grupoId = chatActual.grupoId;
+        nuevoMensaje.esGrupo = true;
+    } else {
+        nuevoMensaje.paraId = parseInt(chatActual.id);
+    }
+    
     mensajes.push(nuevoMensaje);
     guardarTodo();
     document.getElementById("mensajeTexto").value = "";
-    abrirChat(chatActual.id, chatActual.nombre, chatActual.esGrupo, chatActual.grupoId, chatActual.contactoId);
+    abrirChat(chatActual.id, chatActual.nombre, chatActual.esGrupo, chatActual.grupoId);
     mostrarToast("Mensaje enviado", "success");
 }
 
-function cerrarModalChat() { document.getElementById("modalChatOverlay").style.display = "none"; chatActual = { id: null, nombre: "", esGrupo: false, grupoId: null, contactoId: null }; }
+function cerrarModalChat() { 
+    document.getElementById("modalChatOverlay").style.display = "none"; 
+    chatActual = { id: null, nombre: "", esGrupo: false, grupoId: null };
+}
+// ========== FIN FUNCIONES DE CHAT ==========
 
 function cambiarAvatar(input) {
     if (input.files && input.files[0]) {
@@ -247,4 +285,4 @@ document.getElementById("buscarGeneral")?.addEventListener("input", (e) => {
 cargarPerfil();
 renderizarClases();
 renderizarTareas();
-renderizarChats();
+renderizarChats()
