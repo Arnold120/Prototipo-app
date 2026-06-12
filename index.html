@@ -384,6 +384,7 @@
 <script>
     // ==================== CONFIGURACIÓN DE IMÁGENES PREDETERMINADAS ====================
     const DEFAULT_AVATAR = "./images/avatar.png";
+    const DEFAULT_GROUP_AVATAR = "./images/avatar.png";
     
     let usuarioActual = JSON.parse(localStorage.getItem("usuarioActual"));
     if (!usuarioActual || usuarioActual.rol !== "estudiante") window.location.href = "auth/login.html";
@@ -395,6 +396,7 @@
     let mensajes = JSON.parse(localStorage.getItem("mensajesEduClass")) || [];
     let usuarios = JSON.parse(localStorage.getItem("usuariosEduClass")) || [];
     let avatares = JSON.parse(localStorage.getItem("avataresUsuarios")) || {};
+    let grupoAvatares = JSON.parse(localStorage.getItem("grupoAvatares")) || {};
     
     if (!usuarios.find(u => u.id === usuarioActual.id)) usuarios.push(usuarioActual);
     
@@ -406,6 +408,7 @@
         localStorage.setItem("mensajesEduClass", JSON.stringify(mensajes));
         localStorage.setItem("usuariosEduClass", JSON.stringify(usuarios));
         localStorage.setItem("avataresUsuarios", JSON.stringify(avatares));
+        localStorage.setItem("grupoAvatares", JSON.stringify(grupoAvatares));
     }
     
     function getMisGrupos() { return grupos.filter(g => matriculas.some(m => m.estudianteId === usuarioActual.id && m.grupoId === g.id)); }
@@ -420,6 +423,7 @@
     }
     
     function getAvatarUrl(userId) { return avatares[userId] || DEFAULT_AVATAR; }
+    function getGrupoAvatarUrl(grupoId) { return grupoAvatares[grupoId] || DEFAULT_GROUP_AVATAR; }
     
     function mostrarToast(texto, tipo) {
         let t = document.getElementById("toast");
@@ -449,7 +453,7 @@
     
     function renderizarClases() {
         let misGrupos = getMisGrupos();
-        document.getElementById("listaClases").innerHTML = misGrupos.length ? misGrupos.map(g => `<div class="grupo-card"><img src="${getAvatarUrl(g.docenteId)}" class="chat-avatar-list" onerror="this.src='${DEFAULT_AVATAR}'"><div class="card-info-flex"><div class="grupo-nombre"><i class="fa-solid fa-chalkboard"></i> ${escapeHtml(g.nombre)}</div><div class="grupo-desc">${escapeHtml(g.descripcion || "Sin descripción")}</div><div class="grupo-footer"><span><i class="fa-solid fa-code"></i> Código: ${g.codigo}</span><button class="btn-primary" style="padding:4px 12px; font-size:11px" onclick="abrirChat('docente_${g.docenteId}', '${escapeHtml(g.nombre)} (Docente)', false, null)"><i class="fa-regular fa-comment"></i> Contactar</button></div></div></div>`).join("") : '<div class="empty-message"><i class="fa-regular fa-folder-open"></i><p>No hay clases</p><button class="btn-unirse" onclick="abrirModalUnirse()">Unirse</button></div>';
+        document.getElementById("listaClases").innerHTML = misGrupos.length ? misGrupos.map(g => `<div class="grupo-card"><img src="${getGrupoAvatarUrl(g.id)}" class="chat-avatar-list" onerror="this.src='${DEFAULT_GROUP_AVATAR}'"><div class="card-info-flex"><div class="grupo-nombre"><i class="fa-solid fa-chalkboard"></i> ${escapeHtml(g.nombre)}</div><div class="grupo-desc">${escapeHtml(g.descripcion || "Sin descripción")}</div><div class="grupo-footer"><span><i class="fa-solid fa-code"></i> Código: ${g.codigo}</span><button class="btn-primary" style="padding:4px 12px; font-size:11px" onclick="abrirChat('docente_${g.docenteId}', '${escapeHtml(g.nombre)} (Docente)', false, null)"><i class="fa-regular fa-comment"></i> Contactar</button></div></div></div>`).join("") : '<div class="empty-message"><i class="fa-regular fa-folder-open"></i><p>No hay clases</p><button class="btn-unirse" onclick="abrirModalUnirse()">Unirse</button></div>';
     }
     
     function renderizarNotas() {
@@ -478,7 +482,7 @@
                 tipo: "grupo", 
                 grupoId: g.id, 
                 esGrupo: true,
-                avatar: "./images/group-avatar.png"
+                avatar: getGrupoAvatarUrl(g.id)
             });
         });
         document.getElementById("listaChats").innerHTML = Array.from(contactosMap.values()).map(c => `<div class="chat-card" onclick="abrirChat('${c.id}', '${escapeHtml(c.nombre)}', ${c.esGrupo || false}, ${c.grupoId || null}, '${c.tipo === 'docente' ? c.realId : null}')">
